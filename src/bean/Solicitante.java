@@ -8,14 +8,14 @@ public class Solicitante {
     private String nome = null;
     private String rg = null;
     private String cpf = null;
-    private String nome_pai = null;
-    private String nome_mae = null;
-    private int id_endereco = -1;
-    private Date data_nascimento = null;
-    private String sexo = null;
+    private String nomepai = null;
+    private String nomemae = null;
+    private int idendereco = -1;
+    private Date datanascimento = null;
+    private String sexo = null; // Hmmmmmmm (͡° ͜ʖ ͡°) 
     private String naturalidade = null;
-    private String estado_civil = null;
-    private String historico_social = null;
+    private String estadocivil = null;
+    private String historicosocial = null;
 
     public int getId() {
         return id;
@@ -49,43 +49,43 @@ public class Solicitante {
         this.cpf = cpf;
     }
 
-    public String getNome_pai() {
-        return nome_pai;
+    public String getNomePai() {
+        return nomepai;
     }
 
-    public void setNome_pai(String nome_pai) {
-        this.nome_pai = nome_pai;
+    public void setNomePai(String nome_pai) {
+        this.nomepai = nome_pai;
     }
 
-    public String getNome_mae() {
-        return nome_mae;
+    public String getNomeMae() {
+        return nomemae;
     }
 
-    public void setNome_mae(String nome_mae) {
-        this.nome_mae = nome_mae;
+    public void setNomeMae(String nome_mae) {
+        this.nomemae = nome_mae;
     }
 
-    public int getId_endereco() {
-        return id_endereco;
+    public int getIdEndereco() {
+        return idendereco;
     }
 
-    public void setId_endereco(int id_endereco) {
-        this.id_endereco = id_endereco;
+    public void setIdEndereco(int id_endereco) {
+        this.idendereco = id_endereco;
     }
 
-    public Date getData_nascimento() {
-        return data_nascimento;
+    public Date getDataNascimento() {
+        return datanascimento;
     }
 
-    public void setData_nascimento(Date data_nascimento) {
-        this.data_nascimento = data_nascimento;
+    public void setDataNascimento(Date data_nascimento) {
+        this.datanascimento = data_nascimento;
     }
 
-    public String getSexo() {
+    public String getSexo() { // Hmmmmmmm (͡° ͜ʖ ͡°) 
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(String sexo) { // Hmmmmmmm (͡° ͜ʖ ͡°) 
         this.sexo = sexo;
     }
 
@@ -97,20 +97,20 @@ public class Solicitante {
         this.naturalidade = naturalidade;
     }
 
-    public String getEstado_civil() {
-        return estado_civil;
+    public String getEstadoCivil() {
+        return estadocivil;
     }
 
-    public void setEstado_civil(String estado_civil) {
-        this.estado_civil = estado_civil;
+    public void setEstadoCivil(String estado_civil) {
+        this.estadocivil = estado_civil;
     }
 
-    public String getHistorico_social() {
-        return historico_social;
+    public String getHistoricoSocial() {
+        return historicosocial;
     }
 
-    public void setHistorico_social(String historico_social) {
-        this.historico_social = historico_social;
+    public void setHistoricoSocial(String historico_social) {
+        this.historicosocial = historico_social;
     }
     
     
