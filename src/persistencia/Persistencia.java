@@ -83,6 +83,16 @@ public class Persistencia {
 
     }
 
+    public void setParametro(final int pINDEX, final double pPARAMETRO) throws ClassNotFoundException, SQLException, IOException {
+        
+        if (pPARAMETRO == -1) {
+            this.getPreparedStatement(null).setDouble(pINDEX, pPARAMETRO);
+        } else {
+            this.getPreparedStatement(null).setNull(pINDEX, Types.DATE);
+        }        
+        
+    }    
+    
     public ResultSet getResultSet(final String pSQL) throws ClassNotFoundException, SQLException, IOException {
 
         if (this.ResultSet == null) {
@@ -93,7 +103,7 @@ public class Persistencia {
 
         return this.ResultSet;
 
-    }
+    }       
 
     public boolean executeUpdate(final String pSQL) throws ClassNotFoundException, SQLException, IOException {
 

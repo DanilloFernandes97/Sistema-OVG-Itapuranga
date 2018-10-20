@@ -16,6 +16,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
         boolean retorno;
 
         try {
+            
             if (!this.getExiste(pObjeto.getId())) {
 
                 pObjeto.setId(this.getProximoCodigo());
@@ -99,7 +100,8 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
         Persistencia persistencia = null;
 
         try {
-            sql = "SELECT COUNT(cod) FROM aluno WHERE cod = " + pID;
+            
+            sql = "SELECT COUNT(id) FROM solicitante WHERE id = " + pID;
 
             persistencia = new Persistencia();
 
@@ -159,7 +161,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
             sql = sql + " estado_civil,";
             sql = sql + " historico_social";
             sql += " FROM solicitante";
-            sql += " WHERE cod = ?";
+            sql += " WHERE id = ?";
 
             persistencia = new Persistencia();
 

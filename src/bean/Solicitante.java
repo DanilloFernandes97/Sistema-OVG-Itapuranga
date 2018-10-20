@@ -4,113 +4,113 @@ import java.sql.Date;
 
 public class Solicitante {
     
-    private int id = -1;
-    private String nome = null;
-    private String rg = null;
-    private String cpf = null;
-    private String nomepai = null;
-    private String nomemae = null;
-    private int idendereco = -1;
-    private Date datanascimento = null;
-    private String sexo = null; // Hmmmmmmm (͡° ͜ʖ ͡°) 
-    private String naturalidade = null;
-    private String estadocivil = null;
-    private String historicosocial = null;
+    private int Id = -1;
+    private String Nome = null;
+    private String Rg = null;
+    private String Cpf = null;
+    private String NomePai = null;
+    private String NomeMae = null;
+    private int IdEndereco = -1;
+    private Date DataNascimento = null;
+    private String Sexo = null; // Hmmmmmmm (͡° ͜ʖ ͡°) 
+    private String Naturalidade = null;
+    private String EstadoCivil = null;
+    private String HistoricoSocial = null;
 
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public String getNome() {
-        return nome;
+        return Nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.Nome = nome;
     }
 
     public String getRg() {
-        return rg;
+        return Rg;
     }
 
     public void setRg(String rg) {
-        this.rg = rg;
+        this.Rg = rg;
     }
 
     public String getCpf() {
-        return cpf;
+        return Cpf;
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        this.Cpf = cpf;
     }
 
     public String getNomePai() {
-        return nomepai;
+        return NomePai;
     }
 
     public void setNomePai(String nome_pai) {
-        this.nomepai = nome_pai;
+        this.NomePai = nome_pai;
     }
 
     public String getNomeMae() {
-        return nomemae;
+        return NomeMae;
     }
 
     public void setNomeMae(String nome_mae) {
-        this.nomemae = nome_mae;
+        this.NomeMae = nome_mae;
     }
 
     public int getIdEndereco() {
-        return idendereco;
+        return IdEndereco;
     }
 
     public void setIdEndereco(int id_endereco) {
-        this.idendereco = id_endereco;
+        this.IdEndereco = id_endereco;
     }
 
     public Date getDataNascimento() {
-        return datanascimento;
+        return DataNascimento;
     }
 
     public void setDataNascimento(Date data_nascimento) {
-        this.datanascimento = data_nascimento;
+        this.DataNascimento = data_nascimento;
     }
 
     public String getSexo() { // Hmmmmmmm (͡° ͜ʖ ͡°) 
-        return sexo;
+        return Sexo;
     }
 
     public void setSexo(String sexo) { // Hmmmmmmm (͡° ͜ʖ ͡°) 
-        this.sexo = sexo;
+        this.Sexo = sexo;
     }
 
     public String getNaturalidade() {
-        return naturalidade;
+        return Naturalidade;
     }
 
     public void setNaturalidade(String naturalidade) {
-        this.naturalidade = naturalidade;
+        this.Naturalidade = naturalidade;
     }
 
     public String getEstadoCivil() {
-        return estadocivil;
+        return EstadoCivil;
     }
 
     public void setEstadoCivil(String estado_civil) {
-        this.estadocivil = estado_civil;
+        this.EstadoCivil = estado_civil;
     }
 
     public String getHistoricoSocial() {
-        return historicosocial;
+        return HistoricoSocial;
     }
 
     public void setHistoricoSocial(String historico_social) {
-        this.historicosocial = historico_social;
+        this.HistoricoSocial = historico_social;
     }
     
     
