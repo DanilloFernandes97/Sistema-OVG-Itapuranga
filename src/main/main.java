@@ -65,7 +65,7 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSolicitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitantesActionPerformed
-        new JFrameSolicitantes(this, rootPaneCheckingEnabled);
+        JFrameSolicitantes.getFrameSolicitantes();
     }//GEN-LAST:event_btnSolicitantesActionPerformed
 
     /**

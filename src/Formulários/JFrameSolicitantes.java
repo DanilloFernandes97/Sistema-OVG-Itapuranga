@@ -63,6 +63,7 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         edtNomeMae = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -116,6 +117,13 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
             }
         });
 
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -158,9 +166,7 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,11 +175,13 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
-                                    .addComponent(edtNomeMae, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))))))
+                                    .addComponent(edtNomeMae, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE))))))
                 .addGap(18, 18, 18))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnSalvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExcluir)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -225,7 +233,9 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addComponent(btnSalvar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnExcluir))
                 .addContainerGap())
         );
 
@@ -266,29 +276,37 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
     }//GEN-LAST:event_edtNomeMaeActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
-        Solicitante solicitante = new Solicitante();
-        
-        solicitante.setId(-1);
-        solicitante.setCpf(edtCpf.getText());
-        solicitante.setDataNascimento(this.formataData(edtDataNascimento.getText()));                
-        solicitante.setEstadoCivil(ComboboxEstadoCivil.getItemAt(ComboboxEstadoCivil.getSelectedIndex()));
-        solicitante.setHistoricoSocial(textAreaHistoricoSocial.getText());
-        solicitante.setNaturalidade(edtNaturalidade.getText());
-        solicitante.setNome(edtNome.getText());
-        solicitante.setNomeMae(edtNomeMae.getText());
-        solicitante.setNomePai(edtNomePai.getText());
-        solicitante.setRg(edtRg.getText());
-        solicitante.setSexo(ComboboxSexo.getItemAt(ComboboxSexo.getSelectedIndex()).substring(0,1));
-        
-        SolicitanteDAO solicitanteDAO = new SolicitanteDAO();
-        try{
-        solicitanteDAO.salvar(solicitante);
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro ao salvar solicitante. Motivo: " + e.getMessage());
+
+        if (this.validaCampos()) {
+         
+            try {
+
+                Solicitante solicitante = new Solicitante();
+
+                solicitante.setId(-1);
+                solicitante.setCpf(edtCpf.getText());
+                solicitante.setDataNascimento(formataData(edtDataNascimento.getText()));
+                solicitante.setEstadoCivil(ComboboxEstadoCivil.getItemAt(ComboboxEstadoCivil.getSelectedIndex()));
+                solicitante.setHistoricoSocial(textAreaHistoricoSocial.getText());
+                solicitante.setNaturalidade(edtNaturalidade.getText());
+                solicitante.setNome(edtNome.getText());
+                solicitante.setNomeMae(edtNomeMae.getText());
+                solicitante.setNomePai(edtNomePai.getText());
+                solicitante.setRg(edtRg.getText());
+                solicitante.setSexo(ComboboxSexo.getItemAt(ComboboxSexo.getSelectedIndex()).substring(0, 1));
+
+                SolicitanteDAO solicitanteDAO = new SolicitanteDAO();
+
+                solicitanteDAO.salvar(solicitante);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar solicitante. Motivo: " + e.getMessage());
+            }
         }
-        
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -332,8 +350,8 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
         });
     }
 
-    public static boolean frameSolicitantes() {
-        //new JFrameSolicitantes(parent, true)
+    public static boolean getFrameSolicitantes() {
+        new JFrameSolicitantes(null, true);
         return true;
     }
 
@@ -343,17 +361,41 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
         String ano = data.substring(6, 10);
 
         try {
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            return (Date) formato.parse(ano + '-' + mes + '-' + dia);
-        } catch (Exception e) {            
+            return Date.valueOf(ano + '-' + mes + '-' + dia);
+        } catch (Exception e) {
             System.err.println("Erro ao converter data. Motivo:" + e.getMessage());
             return null;
         }
     }
 
+    public boolean validaCampos() {
+
+        if (edtNome.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo Nome é obrigatório e não foi preenchido.");
+            edtNome.requestFocus();            
+            return false;
+        }
+
+        if (edtCpf.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo CPF é obrigatório e não foi preenchido.");
+            edtCpf.requestFocus();
+            return false;
+        }
+
+        if (edtRg.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo RG é obrigatório e não foi preenchido.");
+            edtRg.requestFocus();
+            return false;
+        }
+
+        return true;
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboboxEstadoCivil;
     private javax.swing.JComboBox<String> ComboboxSexo;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JFormattedTextField edtCpf;
     private javax.swing.JFormattedTextField edtDataNascimento;
