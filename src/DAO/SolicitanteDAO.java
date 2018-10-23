@@ -108,7 +108,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
             persistencia.preparaResultSet(true, sql);
 
             if (persistencia.getResultSet(null).first()) {
-                retorno = persistencia.getResultSet(null).getInt("1") > 0;
+                retorno = persistencia.getResultSet(null).getInt(1) > 0;
             }
 
         } finally {
