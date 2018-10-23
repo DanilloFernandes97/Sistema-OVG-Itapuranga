@@ -5,7 +5,7 @@
  */
 package main;
 
-import Formulários.JFrameSolicitantes;
+import Formulários.JFrameCadSolicitantes;
 
 /**
  *
@@ -65,7 +65,7 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSolicitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitantesActionPerformed
-        JFrameSolicitantes.getFrameSolicitantes();
+        JFrameCadSolicitantes.getFrameSolicitantes();
     }//GEN-LAST:event_btnSolicitantesActionPerformed
 
     /**

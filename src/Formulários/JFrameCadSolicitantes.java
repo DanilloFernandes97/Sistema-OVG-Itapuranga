@@ -7,27 +7,24 @@ package Formulários;
 
 import DAO.SolicitanteDAO;
 import bean.Solicitante;
+
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author João Vínicius
  */
-public class JFrameSolicitantes extends javax.swing.JDialog {
+public class JFrameCadSolicitantes extends javax.swing.JDialog {
 
     /**
      * Creates new form JFrameSolicitantes
      */
-    public JFrameSolicitantes(java.awt.Frame parent, boolean modal) {
+    public JFrameCadSolicitantes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
-        setVisible(true);
+        this.setVisible(true);
     }
 
     /**
@@ -65,6 +62,7 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
         btnSalvar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Solicitantes");
@@ -75,6 +73,8 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
         jLabel2.setText("Sexo");
 
         jLabel3.setText("CPF");
+
+        edtNome.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         ComboboxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
 
@@ -232,7 +232,7 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnExcluir))
@@ -250,10 +250,23 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 338, Short.MAX_VALUE)
+            .addGap(0, 333, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("tab2", jPanel2);
+        jTabbedPane1.addTab("Composição Familiar", jPanel2);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 504, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 333, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Despesas familiares", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -263,7 +276,7 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("Dados Gerais");
@@ -278,7 +291,7 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
         if (this.validaCampos()) {
-         
+
             try {
 
                 Solicitante solicitante = new Solicitante();
@@ -305,7 +318,12 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        
+        SolicitanteDAO solicitanteDAO = new SolicitanteDAO();
+        try {
+            solicitanteDAO.delete(1);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir solicitantes. Motivo: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
@@ -325,20 +343,21 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameCadSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameCadSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameCadSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameCadSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrameSolicitantes dialog = new JFrameSolicitantes(new javax.swing.JFrame(), true);
+                JFrameCadSolicitantes dialog = new JFrameCadSolicitantes(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -351,7 +370,7 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
     }
 
     public static boolean getFrameSolicitantes() {
-        new JFrameSolicitantes(null, true);
+        new JFrameCadSolicitantes(null, true);
         return true;
     }
 
@@ -360,19 +379,14 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
         String mes = data.substring(3, 5);
         String ano = data.substring(6, 10);
 
-        try {
-            return Date.valueOf(ano + '-' + mes + '-' + dia);
-        } catch (Exception e) {
-            System.err.println("Erro ao converter data. Motivo:" + e.getMessage());
-            return null;
-        }
+        return Date.valueOf(ano + '-' + mes + '-' + dia);
     }
 
     public boolean validaCampos() {
 
         if (edtNome.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo Nome é obrigatório e não foi preenchido.");
-            edtNome.requestFocus();            
+            edtNome.requestFocus();
             return false;
         }
 
@@ -416,6 +430,7 @@ public class JFrameSolicitantes extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea textAreaHistoricoSocial;
