@@ -125,15 +125,21 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
 
         int retorno = -1;
         String sql = null;
-
+        Persistencia persistencia = new Persistencia();
+        
         try {
 
             sql = "SELECT MAX(id) FROM solicitante";
+            
+            persistencia.preparaResultSet(true, sql);
 
-            retorno = new Persistencia().getStatement().executeQuery(sql).getInt(1) + 1;
+            persistencia.getResultSet(null).first();
+            
+            retorno = persistencia.getResultSet(null).getInt(1) + 1;
 
         } finally {
             sql = null;
+            persistencia = null;
         }
 
         return retorno;

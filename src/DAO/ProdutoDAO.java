@@ -91,14 +91,20 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
         int retorno = -1;
         String sql = null;
 
+        Persistencia persistencia = new Persistencia();        
         try {
 
             sql = "SELECT MAX(id) FROM produto";
 
-            retorno = new Persistencia().getStatement().executeQuery(sql).getInt(1) + 1;
+            persistencia.preparaResultSet(true, sql);
+
+            persistencia.getResultSet(null).first();
+            
+            retorno = persistencia.getResultSet(null).getInt(1) + 1;
 
         } finally {
             sql = null;
+            persistencia = null;            
         }
 
         return retorno;
