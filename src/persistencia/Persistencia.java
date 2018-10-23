@@ -66,9 +66,9 @@ public class Persistencia {
     public void setParametro(final int pINDEX, final Float pPARAMETRO) throws ClassNotFoundException, SQLException, IOException {
 
         if (pPARAMETRO == null || pPARAMETRO == -1) {
-            this.getPreparedStatement(null).setFloat(pINDEX, pPARAMETRO);
-        } else {
             this.getPreparedStatement(null).setNull(pINDEX, Types.FLOAT);
+        } else {
+            this.getPreparedStatement(null).setFloat(pINDEX, pPARAMETRO);            
         }
 
     }
@@ -76,9 +76,9 @@ public class Persistencia {
     public void setParametro(final int pINDEX, final Date pPARAMETRO) throws ClassNotFoundException, SQLException, IOException {
 
         if (pPARAMETRO == null) {
-            this.getPreparedStatement(null).setDate(pINDEX, pPARAMETRO);
+            this.getPreparedStatement(null).setNull(pINDEX, Types.DATE);            
         } else {
-            this.getPreparedStatement(null).setNull(pINDEX, Types.DATE);
+            this.getPreparedStatement(null).setDate(pINDEX, pPARAMETRO);
         }
 
     }
@@ -86,9 +86,9 @@ public class Persistencia {
     public void setParametro(final int pINDEX, final double pPARAMETRO) throws ClassNotFoundException, SQLException, IOException {
         
         if (pPARAMETRO == -1) {
-            this.getPreparedStatement(null).setDouble(pINDEX, pPARAMETRO);
+            this.getPreparedStatement(null).setNull(pINDEX, Types.DOUBLE);            
         } else {
-            this.getPreparedStatement(null).setNull(pINDEX, Types.DATE);
+            this.getPreparedStatement(null).setDouble(pINDEX, pPARAMETRO);
         }        
         
     }    
