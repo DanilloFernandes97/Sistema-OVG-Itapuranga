@@ -24,15 +24,15 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
                 sql = "INSERT INTO produto(";
                 sql = sql + " id,";
                 sql = sql + " id_solicitante,";
-                sql = sql + " moradia,";
-                sql = sql + " energia,";
-                sql = sql + " agua,";
-                sql = sql + " alimentacao,";
-                sql = sql + " farmacia,";
-                sql = sql + " gas,";
-                sql = sql + " telefone,";
-                sql = sql + " financiamento,";
-                sql = sql + " outros";
+                sql = sql + " valor_moradia,";
+                sql = sql + " valor_energia,";
+                sql = sql + " valor_agua,";
+                sql = sql + " valor_alimentacao,";
+                sql = sql + " valor_farmacia,";
+                sql = sql + " valor_gas,";
+                sql = sql + " valor_telefone,";
+                sql = sql + " valor_financiamento,";
+                sql = sql + " valor_outros";
                 sql = sql + ")VALUES(";
                 sql = sql + " ?,";
                 sql = sql + " ?,";
@@ -52,15 +52,15 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
                 sql = "UPDATE produto SET";
                 sql = sql + " id = ?,";
                 sql = sql + " id_solicitante = ?,";
-                sql = sql + " moradia = ?,";
-                sql = sql + " energia = ?,";
-                sql = sql + " agua = ?,";
-                sql = sql + " alimentacao = ?,";
-                sql = sql + " farmacia = ?,";
-                sql = sql + " gas = ?,";
-                sql = sql + " telefone = ?,";
-                sql = sql + " financiamento = ?,";
-                sql = sql + " outros = ?";
+                sql = sql + " valor_moradia = ?,";
+                sql = sql + " valor_energia = ?,";
+                sql = sql + " valor_agua = ?,";
+                sql = sql + " valor_alimentacao = ?,";
+                sql = sql + " valor_farmacia = ?,";
+                sql = sql + " valor_gas = ?,";
+                sql = sql + " valor_telefone = ?,";
+                sql = sql + " valor_financiamento = ?,";
+                sql = sql + " valor_outros = ?";
                 sql = sql + "WHERE id = ?";
             }
 
@@ -70,14 +70,14 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
 
             persistencia.setParametro(1, pObjeto.getId());
             persistencia.setParametro(2, pObjeto.getIdSolicitante());
-            persistencia.setParametro(3, pObjeto.getEnergia());
-            persistencia.setParametro(4, pObjeto.getAgua());
-            persistencia.setParametro(5, pObjeto.getAlimentacao());
-            persistencia.setParametro(6, pObjeto.getFarmacia());
-            persistencia.setParametro(8, pObjeto.getGas());
-            persistencia.setParametro(9, pObjeto.getTelefone());
-            persistencia.setParametro(3, pObjeto.getFinanciamento());
-            persistencia.setParametro(3, pObjeto.getOutros());
+            persistencia.setParametro(3, pObjeto.getValorEnergia());
+            persistencia.setParametro(4, pObjeto.getValorAgua());
+            persistencia.setParametro(5, pObjeto.getValorAlimentacao());
+            persistencia.setParametro(6, pObjeto.getValorFarmacia());
+            persistencia.setParametro(8, pObjeto.getValorGas());
+            persistencia.setParametro(9, pObjeto.getValorTelefone());
+            persistencia.setParametro(3, pObjeto.getValorFinanciamento());
+            persistencia.setParametro(3, pObjeto.getValorOutros());
 
             retorno = persistencia.getPreparedStatement(null).executeUpdate() > 0;
 
@@ -155,15 +155,15 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
             sql = "SELECT";
             sql = sql + " id,";
             sql = sql + " id_solicitante,";
-            sql = sql + " moradia,";
-            sql = sql + " energia,";
-            sql = sql + " agua,";
-            sql = sql + " alimentacao,";
-            sql = sql + " farmacia,";
-            sql = sql + " gas,";
-            sql = sql + " telefone,";
-            sql = sql + " financiamento,";
-            sql = sql + " outros";
+            sql = sql + " valor_moradia,";
+            sql = sql + " valor_energia,";
+            sql = sql + " valor_agua,";
+            sql = sql + " valor_alimentacao,";
+            sql = sql + " valor_farmacia,";
+            sql = sql + " valor_gas,";
+            sql = sql + " valor_telefone,";
+            sql = sql + " valor_financiamento,";
+            sql = sql + " valor_outros";
             sql += " FROM despesas_familiares";
             sql += " WHERE id = ?";
 
@@ -177,15 +177,15 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
 
                 pObjeto.setId(persistencia.getResultSet(null).getInt("id"));
                 pObjeto.setIdSolicitante(persistencia.getResultSet(null).getInt("id_solicitant"));
-                pObjeto.setMoradia(persistencia.getResultSet(null).getDouble("moradia"));
-                pObjeto.setEnergia(persistencia.getResultSet(null).getDouble("energia"));
-                pObjeto.setAgua(persistencia.getResultSet(null).getDouble("agua"));
-                pObjeto.setAlimentacao(persistencia.getResultSet(null).getDouble("alimentacao"));
-                pObjeto.setFarmacia(persistencia.getResultSet(null).getDouble("farmacia"));
-                pObjeto.setGas(persistencia.getResultSet(null).getDouble("gas"));
-                pObjeto.setTelefone(persistencia.getResultSet(null).getDouble("telefone"));
-                pObjeto.setFinanciamento(persistencia.getResultSet(null).getDouble("financiamento"));
-                pObjeto.setOutros(persistencia.getResultSet(null).getDouble("outros"));
+                pObjeto.setValorMoradia(persistencia.getResultSet(null).getDouble("valor_moradia"));
+                pObjeto.setValorEnergia(persistencia.getResultSet(null).getDouble("valor_energia"));
+                pObjeto.setValorAgua(persistencia.getResultSet(null).getDouble("valor_agua"));
+                pObjeto.setValorAlimentacao(persistencia.getResultSet(null).getDouble("valor_alimentacao"));
+                pObjeto.setValorFarmacia(persistencia.getResultSet(null).getDouble("valor_farmacia"));
+                pObjeto.setValorGas(persistencia.getResultSet(null).getDouble("valor_gas"));
+                pObjeto.setValorTelefone(persistencia.getResultSet(null).getDouble("valor_telefone"));
+                pObjeto.setValorFinanciamento(persistencia.getResultSet(null).getDouble("valor_financiamento"));
+                pObjeto.setValorOutros(persistencia.getResultSet(null).getDouble("valor_outros"));
 
             }
 

@@ -1,180 +1,117 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
-/**
- *
- * @author João Vínicius
- */
 public class DespesasFamiliares {
 
     private int id;
     private int idSolicitante;
-    private double moradia;
-    private double energia;
-    private double agua;
-    private double alimentacao;
-    private double farmacia;
-    private double gas;
-    private double telefone;
-    private double financiamento;
-    private double outros;
+    private double valorMoradia;
+    private double valorEnergia;
+    private double valorAgua;
+    private double valorAlimentacao;
+    private double valorFarmacia;
+    private double valorGas;
+    private double valorTelefone;
+    private double valorFinanciamento;
+    private double valorOutros;
 
-    /**
-     * @return the id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
+
     public void setId(int id) {
         this.id = id;
     }
 
-    /**
-     * @return the idSolicitante
-     */
+
     public int getIdSolicitante() {
         return idSolicitante;
     }
 
-    /**
-     * @param idSolicitante the idSolicitante to set
-     */
+
     public void setIdSolicitante(int idSolicitante) {
         this.idSolicitante = idSolicitante;
     }
 
-    /**
-     * @return the moradia
-     */
-    public double getMoradia() {
-        return moradia;
+ 
+    public double getValorMoradia() {
+        return valorMoradia;
     }
 
-    /**
-     * @param moradia the moradia to set
-     */
-    public void setMoradia(double moradia) {
-        this.moradia = moradia;
+
+    public void setValorMoradia(double valorMoradia) {
+        this.valorMoradia = valorMoradia;
     }
 
-    /**
-     * @return the energia
-     */
-    public double getEnergia() {
-        return energia;
+
+    public double getValorEnergia() {
+        return valorEnergia;
     }
 
-    /**
-     * @param energia the energia to set
-     */
-    public void setEnergia(double energia) {
-        this.energia = energia;
+    public void setValorEnergia(double valorEnergia) {
+        this.valorEnergia = valorEnergia;
     }
 
-    /**
-     * @return the agua
-     */
-    public double getAgua() {
-        return agua;
+
+    public double getValorAgua() {
+        return valorAgua;
     }
 
-    /**
-     * @param agua the agua to set
-     */
-    public void setAgua(double agua) {
-        this.agua = agua;
+    public void setValorAgua(double valorAgua) {
+        this.valorAgua = valorAgua;
     }
 
-    /**
-     * @return the alimentacao
-     */
-    public double getAlimentacao() {
-        return alimentacao;
+    public double getValorAlimentacao() {
+        return valorAlimentacao;
     }
 
-    /**
-     * @param alimentacao the alimentacao to set
-     */
-    public void setAlimentacao(double alimentacao) {
-        this.alimentacao = alimentacao;
+
+    public void setValorAlimentacao(double valorAlimentacao) {
+        this.valorAlimentacao = valorAlimentacao;
     }
 
-    /**
-     * @return the farmacia
-     */
-    public double getFarmacia() {
-        return farmacia;
+
+    public double getValorFarmacia() {
+        return valorFarmacia;
     }
 
-    /**
-     * @param farmacia the farmacia to set
-     */
-    public void setFarmacia(double farmacia) {
-        this.farmacia = farmacia;
+  
+    public void setValorFarmacia(double valorFarmacia) {
+        this.valorFarmacia = valorFarmacia;
     }
 
-    /**
-     * @return the gas
-     */
-    public double getGas() {
-        return gas;
+
+    public double getValorGas() {
+        return valorGas;
     }
 
-    /**
-     * @param gas the gas to set
-     */
-    public void setGas(double gas) {
-        this.gas = gas;
+ 
+    public void setValorGas(double valorGas) {
+        this.valorGas = valorGas;
+    }
+    
+    public double getValorTelefone() {
+        return valorTelefone;
     }
 
-    /**
-     * @return the telefone
-     */
-    public double getTelefone() {
-        return telefone;
+    public void setValorTelefone(double valorTelefone) {
+        this.valorTelefone = valorTelefone;
     }
 
-    /**
-     * @param telefone the telefone to set
-     */
-    public void setTelefone(double telefone) {
-        this.telefone = telefone;
+    public double getValorFinanciamento() {
+        return valorFinanciamento;
     }
 
-    /**
-     * @return the financiamento
-     */
-    public double getFinanciamento() {
-        return financiamento;
+    public void setValorFinanciamento(double valorFinanciamento) {
+        this.valorFinanciamento = valorFinanciamento;
     }
 
-    /**
-     * @param financiamento the financiamento to set
-     */
-    public void setFinanciamento(double financiamento) {
-        this.financiamento = financiamento;
+    public double getValorOutros() {
+        return valorOutros;
     }
 
-    /**
-     * @return the outros
-     */
-    public double getOutros() {
-        return outros;
-    }
-
-    /**
-     * @param outros the outros to set
-     */
-    public void setOutros(double outros) {
-        this.outros = outros;
+    public void setValorOutros(double valorOutros) {
+        this.valorOutros = valorOutros;
     }
 
 }
