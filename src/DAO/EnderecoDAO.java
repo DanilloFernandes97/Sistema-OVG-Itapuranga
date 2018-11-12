@@ -1,15 +1,15 @@
 package DAO;
 
 import interface_persistencia.InterfacePersistencia;
-import bean.Produto;
+import bean.Endereco;
 import java.io.IOException;
 import java.sql.SQLException;
 import persistencia.Persistencia;
 
-public class ProdutoDAO implements InterfacePersistencia<Produto> {
+public class EnderecoDAO implements InterfacePersistencia<Endereco> {
 
     @Override
-    public boolean salvar(Produto pObjeto) throws IOException, ClassNotFoundException, SQLException {
+    public boolean salvar(Endereco pObjeto) throws IOException, ClassNotFoundException, SQLException {
 
         Persistencia persistencia = null;
         String sql = null;
@@ -21,11 +21,19 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
                 pObjeto.setId(this.getProximoCodigo());
 
-                sql = "INSERT INTO produto(";
-                sql = sql + " nome,";
-                sql = sql + " quantidade,";
-                sql = sql + " id";
+                sql = "INSERT INTO endereco(";
+                sql = sql + " id,";
+                sql = sql + " logadouro,";
+                sql = sql + " bairro,";
+                sql = sql + " complemento,";
+                sql = sql + " numero,";
+                sql = sql + " cep,";
+                sql = sql + " id_municipio";
                 sql = sql + ")VALUES(";
+                sql = sql + " ?,";
+                sql = sql + " ?,";
+                sql = sql + " ?,";
+                sql = sql + " ?,";
                 sql = sql + " ?,";
                 sql = sql + " ?,";
                 sql = sql + " ?";
@@ -33,9 +41,14 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
             } else {
 
-                sql = "UPDATE produto SET";
-                sql = sql + " nome = ?,";
-                sql = sql + " quantidade = ?,";
+                sql = "UPDATE endereco SET";
+                sql = sql + " id = ?,";
+                sql = sql + " logadouro = ?,";
+                sql = sql + " bairro = ?,";
+                sql = sql + " complemento = ?,";
+                sql = sql + " numero = ?,";
+                sql = sql + " cep = ?,";
+                sql = sql + " id_municipio = ?";
                 sql = sql + "WHERE id = ?";
             }
 
@@ -43,9 +56,14 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
             persistencia.getPreparedStatement(sql);
 
-            persistencia.setParametro(1, pObjeto.getNome());
-            persistencia.setParametro(2, pObjeto.getQuantidade());
-            persistencia.setParametro(3, pObjeto.getId());
+            persistencia.setParametro(1, pObjeto.getId());
+            persistencia.setParametro(2, pObjeto.getLogadouro());
+            persistencia.setParametro(3, pObjeto.getLogadouro());
+            persistencia.setParametro(4, pObjeto.getBairro());
+            persistencia.setParametro(5, pObjeto.getComplemento());
+            persistencia.setParametro(6, pObjeto.getNumero());
+            persistencia.setParametro(8, pObjeto.getCep());
+            persistencia.setParametro(9, pObjeto.getId_municipio());
 
             retorno = persistencia.getPreparedStatement(null).executeUpdate() > 0;
 
@@ -66,7 +84,7 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
         try {
 
-            sql = "SELECT COUNT(id) FROM produto WHERE id = " + pID;
+            sql = "SELECT COUNT(id) FROM endereco WHERE id = " + pID;
 
             persistencia = new Persistencia();
 
@@ -91,20 +109,20 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
         int retorno = -1;
         String sql = null;
 
-        Persistencia persistencia = new Persistencia();        
+        Persistencia persistencia = new Persistencia();
         try {
 
-            sql = "SELECT MAX(id) FROM produto";
+            sql = "SELECT MAX(id) FROM endereco";
 
             persistencia.preparaResultSet(true, sql);
 
             persistencia.getResultSet(null).first();
-            
+
             retorno = persistencia.getResultSet(null).getInt(1) + 1;
 
         } finally {
             sql = null;
-            persistencia = null;            
+            persistencia = null;
         }
 
         return retorno;
@@ -112,7 +130,7 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
     }
 
     @Override
-    public boolean getObjeto(int pID, Produto pObjeto) throws IOException, ClassNotFoundException, SQLException {
+    public boolean getObjeto(int pID, Endereco pObjeto) throws IOException, ClassNotFoundException, SQLException {
 
         String sql = null;
         Persistencia persistencia = null;
@@ -122,9 +140,13 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
             sql = "SELECT";
             sql = sql + " id,";
-            sql = sql + " nome,";
-            sql = sql + " quantidade,";
-            sql += " FROM produto";
+            sql = sql + " logadouro,";
+            sql = sql + " bairro,";
+            sql = sql + " complemento,";
+            sql = sql + " numero,";
+            sql = sql + " cep,";
+            sql = sql + " id_municipio";
+            sql += " FROM endereco";
             sql += " WHERE id = ?";
 
             persistencia = new Persistencia();
@@ -135,9 +157,12 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
             if (persistencia.getResultSet(null).first()) {
 
-                pObjeto.setNome(persistencia.getResultSet(null).getString("nome"));
-                pObjeto.setQuantidade(persistencia.getResultSet(null).getDouble("quantidade"));
                 pObjeto.setId(persistencia.getResultSet(null).getInt("id"));
+                pObjeto.setBairro(persistencia.getResultSet(null).getString("bairro"));
+                pObjeto.setLogadouro(persistencia.getResultSet(null).getString("logadouro"));
+                pObjeto.setComplemento(persistencia.getResultSet(null).getString("Complemento"));
+                pObjeto.setNumero(persistencia.getResultSet(null).getString("numero"));
+                pObjeto.setCep(persistencia.getResultSet(null).getString("cep"));
 
             }
 
@@ -154,14 +179,14 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
     @Override
     public boolean delete(int pID) throws IOException, ClassNotFoundException, SQLException {
-     
+
         Persistencia persistencia = null;
         String sql = null;
         boolean retorno = false;
 
         try {
 
-            sql = "DELETE FROM produto WHERE id = ?";
+            sql = "DELETE FROM endereco WHERE id = ?";
 
             persistencia.getPreparedStatement(sql);
 

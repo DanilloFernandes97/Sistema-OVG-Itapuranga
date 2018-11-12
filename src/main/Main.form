@@ -28,7 +28,11 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnSolicitantes" min="-2" pref="150" max="-2" attributes="0"/>
-              <EmptySpace pref="240" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="btnUsuarios" min="-2" pref="155" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="btnCadProdutos" min="-2" pref="154" max="-2" attributes="0"/>
+              <EmptySpace pref="67" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -36,7 +40,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnSolicitantes" min="-2" pref="78" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnUsuarios" max="32767" attributes="0"/>
+                  <Component id="btnSolicitantes" pref="78" max="32767" attributes="0"/>
+                  <Component id="btnCadProdutos" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace pref="211" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -45,13 +53,26 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="btnSolicitantes">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Jo&#xe3;o V&#xed;nicius\Downloads\if_emblem-people_24702.png"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="Solicitantes"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSolicitantesActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnUsuarios">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Usu&#xe1;rios"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsuariosActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCadProdutos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Produtos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadProdutosActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
