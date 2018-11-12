@@ -144,5 +144,30 @@ public class Persistencia {
             this.ResultSet = this.getPreparedStatement(pSQL).executeQuery();
         }
     }
+    
+    public int getProximoCodigo(final String pENTIDADE, final String pNOME_ATRIBUTO) throws SQLException, ClassNotFoundException, IOException{
+        int retorno = -1;
+        String sql = null;
+
+        Persistencia persistencia = new Persistencia();
+        try {
+
+            sql = "SELECT MAX("+pNOME_ATRIBUTO+") FROM " + pENTIDADE;
+
+            persistencia.preparaResultSet(true, sql);
+
+            persistencia.getResultSet(null).first();
+
+            retorno = persistencia.getResultSet(null).getInt(1) + 1;
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
+
+        return retorno;
+    }
+    
+    
 
 }

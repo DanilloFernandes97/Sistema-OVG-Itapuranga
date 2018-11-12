@@ -449,12 +449,13 @@ public class JFrameCadSolicitantes extends javax.swing.JDialog {
         });
     }
 
-    public static boolean getFrameSolicitantes() {
+    public static boolean getFrameCadSolicitantes() {
         new JFrameCadSolicitantes(null, true);
         return true;
     }
 
     public boolean validaData(String data) {
+        
         int dia = Integer.getInteger(data.substring(0, 2));
         int mes = Integer.getInteger(data.substring(3, 5));
         int ano = Integer.getInteger(data.substring(6, 10));
@@ -468,8 +469,8 @@ public class JFrameCadSolicitantes extends javax.swing.JDialog {
 
     public Date formataData(String data) {
         this.validaData(data);
-
-        String dia = data.substring(0, 2);
+               
+        String dia = data.substring(0, 2); 
         String mes = data.substring(3, 5);
         String ano = data.substring(6, 10);
 

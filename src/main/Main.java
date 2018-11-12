@@ -5,7 +5,9 @@
  */
 package main;
 
+import Formulários.JFrameCadProduto;
 import Formulários.JFrameCadSolicitantes;
+import Formulários.JFrameCadUsuario;
 
 /**
  *
@@ -31,16 +33,31 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         btnSolicitantes = new javax.swing.JButton();
+        btnUsuarios = new javax.swing.JButton();
+        btnCadProdutos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema OVG");
         setName("FrameMain"); // NOI18N
 
-        btnSolicitantes.setIcon(new javax.swing.ImageIcon("C:\\Users\\João Vínicius\\Downloads\\if_emblem-people_24702.png")); // NOI18N
         btnSolicitantes.setText("Solicitantes");
         btnSolicitantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSolicitantesActionPerformed(evt);
+            }
+        });
+
+        btnUsuarios.setText("Usuários");
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuariosActionPerformed(evt);
+            }
+        });
+
+        btnCadProdutos.setText("Produtos");
+        btnCadProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadProdutosActionPerformed(evt);
             }
         });
 
@@ -51,13 +68,20 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnSolicitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCadProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnSolicitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSolicitantes, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
+                    .addComponent(btnCadProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(211, Short.MAX_VALUE))
         );
 
@@ -65,8 +89,16 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSolicitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitantesActionPerformed
-        JFrameCadSolicitantes.getFrameSolicitantes();
+        JFrameCadSolicitantes.getFrameCadSolicitantes();
     }//GEN-LAST:event_btnSolicitantesActionPerformed
+
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+        JFrameCadUsuario.getFrameCadUsuario();
+    }//GEN-LAST:event_btnUsuariosActionPerformed
+
+    private void btnCadProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadProdutosActionPerformed
+        JFrameCadProduto.getFrameCadProduto();
+    }//GEN-LAST:event_btnCadProdutosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -104,6 +136,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCadProdutos;
     private javax.swing.JButton btnSolicitantes;
+    private javax.swing.JButton btnUsuarios;
     // End of variables declaration//GEN-END:variables
 }
