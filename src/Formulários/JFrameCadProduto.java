@@ -9,8 +9,6 @@ import DAO.ProdutoDAO;
 import bean.Produto;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,7 +42,8 @@ public class JFrameCadProduto extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         edtQuantEntrada = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de produtos");
@@ -64,17 +63,27 @@ public class JFrameCadProduto extends javax.swing.JDialog {
 
         jLabel2.setText("Quantidade de entrada");
 
-        btnSalvar.setText("Salvar");
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Salva.png"))); // NOI18N
+        btnSalvar.setText("Salvar - F6");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Sair");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Sair png 16x16.png"))); // NOI18N
+        btnSair.setText("Sair - Esc");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnSairActionPerformed(evt);
+            }
+        });
+
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/if_folder-new_118756.png"))); // NOI18N
+        btnNovo.setText("Novo - F7");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
             }
         });
 
@@ -85,15 +94,20 @@ public class JFrameCadProduto extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(edtNomePro, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(edtQuantEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(edtQuantEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(18, 18, 18)
+                            .addComponent(btnSair))
+                        .addComponent(edtNomePro, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,10 +120,11 @@ public class JFrameCadProduto extends javax.swing.JDialog {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(edtQuantEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(btnSalvar))
+                    .addComponent(btnSair)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnNovo))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -121,31 +136,37 @@ public class JFrameCadProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_edtNomeProActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
-        Produto produto = new Produto();
-        
-        produto.setId(-1);
-        produto.setNome(edtNomePro.getText());
-        produto.setQuantidade(Double.parseDouble(edtQuantEntrada.getText()));
 
-        ProdutoDAO produtoDAO = new ProdutoDAO();
-        try {
-            if (produtoDAO.salvar(produto)){
-                JOptionPane.showMessageDialog(null, "Produto salvo com sucesso.");
+        if (this.validaCampos()) {
+            Produto produto = new Produto();
+
+            produto.setId(-1);
+            produto.setNome(edtNomePro.getText());
+            produto.setQuantidade(Double.parseDouble(edtQuantEntrada.getText()));
+
+            ProdutoDAO produtoDAO = new ProdutoDAO();
+            try {
+                if (produtoDAO.salvar(produto)) {
+                    JOptionPane.showMessageDialog(null, "Produto salvo com sucesso.");
+                }
+            } catch (IOException | ClassNotFoundException | SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar produto. Motivo: " + ex.getMessage());
             }
-        } catch (IOException | ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar produto. Motivo: " + ex.getMessage());
         }
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-      
+
     }//GEN-LAST:event_formKeyPressed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnNovoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,11 +215,28 @@ public class JFrameCadProduto extends javax.swing.JDialog {
         return true;
     }
 
+    public boolean validaCampos() {
+        if (edtNomePro.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo Nome é obrigatório e não foi preenchido.");
+            edtNomePro.requestFocus();
+            return false;
+        }
+
+        if (edtQuantEntrada.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo quantidade de entrada é obrigatório e não foi preenchido.");
+            edtQuantEntrada.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JTextField edtNomePro;
     private javax.swing.JTextField edtQuantEntrada;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables

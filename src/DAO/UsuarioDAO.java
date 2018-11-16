@@ -2,9 +2,10 @@ package DAO;
 
 import interface_persistencia.InterfacePersistencia;
 import bean.Usuario;
-import enuns.TipoTelefone;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import persistencia.Persistencia;
 
 public class UsuarioDAO implements InterfacePersistencia<Usuario> {
@@ -24,9 +25,9 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
 
                 sql = "INSERT INTO usuario(";
                 sql = sql + " nome,";
-                sql = sql + " senha,";                
+                sql = sql + " senha,";
                 sql = sql + " id";
-                sql = sql + ")VALUES(";                
+                sql = sql + ")VALUES(";
                 sql = sql + " ?,";
                 sql = sql + " ?,";
                 sql = sql + " ?";
@@ -36,7 +37,7 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
 
                 sql = "UPDATE usuario SET";
                 sql = sql + " nome = ?,";
-                sql = sql + " senha = ?";                
+                sql = sql + " senha = ?";
                 sql = sql + "WHERE id = ?";
             }
 
@@ -45,7 +46,7 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
             persistencia.getPreparedStatement(sql);
 
             persistencia.setParametro(1, pObjeto.getNome());
-            persistencia.setParametro(2, pObjeto.getSenha());          
+            persistencia.setParametro(2, pObjeto.getSenha());
             persistencia.setParametro(3, pObjeto.getId());
 
             retorno = persistencia.getPreparedStatement(null).executeUpdate() > 0;
@@ -124,7 +125,7 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
             sql = "SELECT";
             sql = sql + " id,";
             sql = sql + " nome,";
-            sql = sql + " senha";            
+            sql = sql + " senha";
             sql += " FROM usuario";
             sql += " WHERE id = ?";
 
@@ -137,7 +138,7 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
             if (persistencia.getResultSet(null).first()) {
 
                 pObjeto.setNome(persistencia.getResultSet(null).getString("nome"));
-                pObjeto.setSenha(persistencia.getResultSet(null).getString("senha"));                
+                pObjeto.setSenha(persistencia.getResultSet(null).getString("senha"));
                 pObjeto.setId(persistencia.getResultSet(null).getInt("id"));
 
             }
@@ -161,6 +162,7 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
         boolean retorno = false;
 
         try {
+            persistencia = new Persistencia();
 
             sql = "DELETE FROM usuario WHERE id = ?";
 
@@ -179,12 +181,59 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
 
     }
 
-    public int convertEnumToInt(final TipoTelefone tipoTelefone) {
-        return 0;
-    }
+    public List<Usuario> getConsulta(final String pCHAVE, final byte pCONSULTARPOR) throws ClassNotFoundException, SQLException, IOException {
+        String sql = null;
+        Persistencia persistencia = null;
 
-    public TipoTelefone convertIntToEnum(final int valor) {
-        return TipoTelefone.ttCelular;
+        List<Usuario> lista = new ArrayList<>();
+
+        try {
+
+            sql = "SELECT";
+            sql += " id,";
+            sql += " nome";
+            sql += " FROM usuario";
+            sql += " WHERE 0=0";
+
+            persistencia = new Persistencia();
+
+            if (!pCHAVE.trim().isEmpty()) {
+
+                switch (pCONSULTARPOR) {
+                    case 0:// Código
+                        sql += " AND id = " + pCHAVE;                        
+                        break;
+                        
+                    case 1:// Nome
+                        sql += " AND nome LIKE ?";
+                        persistencia.setParametro(1, pCHAVE + "%");
+                        break;
+
+                    case 2: // Palavra-Chave
+                        sql += " AND nome LIKE ?";
+                        persistencia.setParametro(1, "%" + pCHAVE + "%");
+                        break;
+                }
+            }
+
+            persistencia.getPreparedStatement(sql);
+
+            while (persistencia.getResultSet(sql).next()) {
+                Usuario usuario = new Usuario();
+
+                usuario.setNome(persistencia.getResultSet(null).getString("nome"));
+                usuario.setId(persistencia.getResultSet(null).getInt("id"));
+
+                lista.add(usuario);
+
+            }
+
+            return lista;
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
     }
 
 }

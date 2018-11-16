@@ -5,17 +5,35 @@
  */
 package Formulários;
 
+import DAO.UsuarioDAO;
+import bean.Usuario;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author maxoe
  */
-public class JFrameConsSolicitantes extends javax.swing.JFrame {
+public class JFrameConsUsuario extends javax.swing.JFrame {
+
+    public static boolean getFrameCadUsuario() {
+        new JFrameConsUsuario();
+        return true;
+    }
 
     /**
-     * Creates new form JFrameConsSolicitantes
+     * Creates new form JFrameConsUsuario
      */
-    public JFrameConsSolicitantes() {
+    public JFrameConsUsuario() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        this.btnConsultar.doClick();
     }
 
     /**
@@ -37,6 +55,7 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
         btnExcluir = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -50,7 +69,7 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Consultar do Solicitante");
+        setTitle("Consulta de usuários");
 
         panelConsultarPor.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultar por"));
 
@@ -75,15 +94,32 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Nome"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMouseClicked(evt);
+            }
+        });
         jScrollPane.setViewportView(jTable);
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Alterar png 16x16.png"))); // NOI18N
@@ -97,10 +133,20 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Excluir png 16x16.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setPreferredSize(new java.awt.Dimension(85, 25));
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Novo png 16x16.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.setPreferredSize(new java.awt.Dimension(85, 29));
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Sair png 16x16.png"))); // NOI18N
         btnSair.setText("Sair");
@@ -108,6 +154,13 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
+            }
+        });
+
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
             }
         });
 
@@ -123,15 +176,18 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(panelConsultarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(edtCons, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(edtCons, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnConsultar)
+                            .addGap(9, 9, 9)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAlterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -142,8 +198,10 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(panelConsultarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(edtCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(edtCons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnConsultar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -165,12 +223,61 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
     }//GEN-LAST:event_edtConsActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        // TODO add your handling code here:
+        if (JFrameCadUsuario.getFrameCadUsuario((int) jTable.getValueAt(jTable.getSelectedRow(), 0))) {
+            try {
+                this.readJTable();
+            } catch (ClassNotFoundException | SQLException | IOException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar informações do usuário. Motivo: " + ex.getMessage());
+            }
+        }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o registro?", "Atenção!", JOptionPane.YES_NO_OPTION) == 0) {
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+            try {
+
+                if (usuarioDAO.delete((int) jTable.getValueAt(jTable.getSelectedRow(), 0))) {
+                    this.readJTable();
+                }
+            } catch (IOException | ClassNotFoundException | SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir usuário. Motivo: " + ex.getMessage());
+            }
+
+        }
+
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        if (JFrameCadUsuario.getFrameCadUsuario(-1)) {
+            try {
+                this.readJTable();
+            } catch (ClassNotFoundException | SQLException | IOException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao buscar informações do usuário. Motivo: " + ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        try {
+            readJTable();
+        } catch (ClassNotFoundException | SQLException | IOException ex) {
+            Logger.getLogger(JFrameConsUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
+
+        if (evt.getClickCount() == 2) {
+            btnAlterar.doClick();
+        }
+    }//GEN-LAST:event_jTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -189,26 +296,44 @@ public class JFrameConsSolicitantes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameConsUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameConsUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameConsUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsSolicitantes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameConsUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameConsSolicitantes().setVisible(true);
+                new JFrameConsUsuario().setVisible(true);
             }
         });
     }
 
+    public void readJTable() throws ClassNotFoundException, SQLException, IOException {
+        DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
+
+        modelo.setNumRows(0);
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        for (Usuario u : usuarioDAO.getConsulta(edtCons.getText(), (byte) comboboxConsultarPor.getSelectedIndex())) {
+
+            modelo.addRow(new Object[]{
+                u.getId(),
+                u.getNome()
+            }
+            );
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;

@@ -17,14 +17,14 @@ import javax.swing.JOptionPane;
  */
 public class JFrameCadUsuario extends javax.swing.JDialog {
 
+    private int id = -1;
+
     /**
      * Creates new form JFrameCadUsuario
      */
     public JFrameCadUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
     }
 
     /**
@@ -105,11 +105,11 @@ public class JFrameCadUsuario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-       
+
         if (this.ValidaCampos()) {
-            
+
             Usuario usuario = new Usuario();
-            usuario.setId(-1);
+            usuario.setId(this.id);
             usuario.setNome(edtNome.getText());
             usuario.setSenha(edtSenha.getText());
 
@@ -134,7 +134,7 @@ public class JFrameCadUsuario extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private boolean ValidaCampos() {
-        
+
         if (edtNome.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo Nome é obrigatório e não foi preenchido.");
             edtNome.requestFocus();
@@ -192,9 +192,36 @@ public class JFrameCadUsuario extends javax.swing.JDialog {
         });
     }
 
-    public static boolean getFrameCadUsuario() {
-        new JFrameCadUsuario(null, true);
+    public static boolean getFrameCadUsuario(final int id) {
+
+        JFrameCadUsuario jFrameCadUsuario = new JFrameCadUsuario(null, true);
+
+        try {
+
+            jFrameCadUsuario.id = id;
+
+            jFrameCadUsuario.carregaObjetos();
+
+            jFrameCadUsuario.setLocationRelativeTo(null);
+            jFrameCadUsuario.setVisible(true);
+
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar informações do usuário. Motivo: " + ex.getMessage());
+        }
+
         return true;
+    }
+
+    private void carregaObjetos() throws IOException, ClassNotFoundException, SQLException {
+
+        if (this.id > 0) {
+
+            Usuario usuario = new Usuario();
+            if (new UsuarioDAO().getObjeto(id, usuario)) {
+                edtNome.setText(usuario.getNome());
+                edtSenha.setText(usuario.getSenha());
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
