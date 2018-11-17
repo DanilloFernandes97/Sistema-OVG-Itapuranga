@@ -4,6 +4,8 @@ import interface_persistencia.InterfacePersistencia;
 import bean.Produto;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import persistencia.Persistencia;
 
 public class ProdutoDAO implements InterfacePersistencia<Produto> {
@@ -35,7 +37,7 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
                 sql = "UPDATE produto SET";
                 sql = sql + " nome = ?,";
-                sql = sql + " quantidade = ?,";
+                sql = sql + " quantidade = ?";
                 sql = sql + "WHERE id = ?";
             }
 
@@ -123,7 +125,7 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
             sql = "SELECT";
             sql = sql + " id,";
             sql = sql + " nome,";
-            sql = sql + " quantidade,";
+            sql = sql + " quantidade";
             sql += " FROM produto";
             sql += " WHERE id = ?";
 
@@ -160,7 +162,8 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
         boolean retorno = false;
 
         try {
-
+             persistencia = new Persistencia();
+            
             sql = "DELETE FROM produto WHERE id = ?";
 
             persistencia.getPreparedStatement(sql);
@@ -176,6 +179,59 @@ public class ProdutoDAO implements InterfacePersistencia<Produto> {
 
         return retorno;
 
+    }
+    
+    public List<Produto> getConsulta(final String pCHAVE, final byte pCONSULTARPOR) throws ClassNotFoundException, SQLException, IOException {
+        String sql = null;
+        Persistencia persistencia = null;
+
+        List<Produto> lista = new ArrayList<>();
+
+        try {
+
+            sql = "SELECT";
+            sql += " id,";
+            sql += " nome";
+            sql += " FROM produto";
+            sql += " WHERE 0=0";
+
+            persistencia = new Persistencia();
+
+            if (!pCHAVE.trim().isEmpty()) {
+
+                switch (pCONSULTARPOR) {
+                    case 0:// Código                      
+                        sql += " AND id = " + pCHAVE;
+                        break;
+
+                    case 1:// Nome                        
+                        sql += " AND nome LIKE '" + pCHAVE + "%'";                      
+                        break;
+
+                    case 2: // Palavra-Chave
+                        sql += " AND nome LIKE '%" + pCHAVE + "%'";                                              
+                        break;
+                }
+            }
+
+            persistencia.getPreparedStatement(sql);
+
+            while (persistencia.getResultSet(sql).next()) {
+                Produto produto = new Produto();
+
+                produto.setNome(persistencia.getResultSet(null).getString("nome"));
+                produto.setId(persistencia.getResultSet(null).getInt("id"));
+
+                lista.add(produto);
+
+            }
+
+            return lista;
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
     }
 
 }

@@ -5,9 +5,9 @@
  */
 package main;
 
-import Formulários.JFrameCadProduto;
-import Formulários.JFrameCadSolicitantes;
-import Formulários.JFrameCadUsuario;
+import Formulários.JFrameConsProduto;
+import Formulários.JFrameConsSolicitante;
+import Formulários.JFrameConsUsuario;
 
 /**
  *
@@ -89,15 +89,15 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSolicitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSolicitantesActionPerformed
-        JFrameCadSolicitantes.getFrameCadSolicitantes();
+        JFrameConsSolicitante.getFrameConsSolicitante();
     }//GEN-LAST:event_btnSolicitantesActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        JFrameCadUsuario.getFrameCadUsuario();
+        JFrameConsUsuario.getFrameConsUsuario();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnCadProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadProdutosActionPerformed
-        JFrameCadProduto.getFrameCadProduto();
+        JFrameConsProduto.getFrameConsProduto();
     }//GEN-LAST:event_btnCadProdutosActionPerformed
 
     /**

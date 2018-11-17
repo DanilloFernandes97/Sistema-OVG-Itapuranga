@@ -12,7 +12,7 @@ public class Solicitante {
     private String NomeMae = null;
     private int IdEndereco = -1;
     private Date DataNascimento = null;
-    private String Sexo = null; // Hmmmmmmm (͡° ͜ʖ ͡°) 
+    private String Sexo = null; 
     private String Naturalidade = null;
     private String EstadoCivil = null;
     private String HistoricoSocial = null;

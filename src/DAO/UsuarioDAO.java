@@ -200,18 +200,16 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
             if (!pCHAVE.trim().isEmpty()) {
 
                 switch (pCONSULTARPOR) {
-                    case 0:// Código
-                        sql += " AND id = " + pCHAVE;                        
+                    case 0:// Código                      
+                        sql += " AND id = " + pCHAVE;
                         break;
-                        
-                    case 1:// Nome
-                        sql += " AND nome LIKE ?";
-                        persistencia.setParametro(1, pCHAVE + "%");
+
+                    case 1:// Nome                        
+                        sql += " AND nome LIKE '" + pCHAVE + "%'";                      
                         break;
 
                     case 2: // Palavra-Chave
-                        sql += " AND nome LIKE ?";
-                        persistencia.setParametro(1, "%" + pCHAVE + "%");
+                        sql += " AND nome LIKE '%" + pCHAVE + "%'";                                              
                         break;
                 }
             }

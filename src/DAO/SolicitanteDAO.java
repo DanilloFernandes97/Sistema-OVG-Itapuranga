@@ -1,9 +1,12 @@
 package DAO;
 
+import bean.Produto;
 import bean.Solicitante;
 import interface_persistencia.InterfacePersistencia;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import persistencia.Persistencia;
 
 public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
@@ -16,7 +19,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
         boolean retorno;
 
         try {
-            
+
             if (!this.getExiste(pObjeto.getId())) {
 
                 pObjeto.setId(this.getProximoCodigo());
@@ -100,7 +103,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
         Persistencia persistencia = null;
 
         try {
-            
+
             sql = "SELECT COUNT(id) FROM solicitante WHERE id = " + pID;
 
             persistencia = new Persistencia();
@@ -126,15 +129,15 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
         int retorno = -1;
         String sql = null;
         Persistencia persistencia = new Persistencia();
-        
+
         try {
 
             sql = "SELECT MAX(id) FROM solicitante";
-            
+
             persistencia.preparaResultSet(true, sql);
 
             persistencia.getResultSet(null).first();
-            
+
             retorno = persistencia.getResultSet(null).getInt(1) + 1;
 
         } finally {
@@ -205,13 +208,13 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
 
     @Override
     public boolean delete(int pID) throws ClassNotFoundException, SQLException, IOException {
-        
+
         Persistencia persistencia = null;
         String sql = null;
         boolean retorno = false;
-        
+
         try {
-            
+
             sql = "DELETE FROM solicitante WHERE id = ?";
 
             persistencia.getPreparedStatement(sql);
@@ -227,6 +230,79 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
 
         return retorno;
 
+    }
+
+    public List<Solicitante> getConsulta(final String pCHAVE, final byte pCONSULTARPOR) throws ClassNotFoundException, SQLException, IOException {
+        String sql = null;
+        Persistencia persistencia = null;
+
+        List<Solicitante> lista = new ArrayList<>();
+
+        try {
+
+            sql = "SELECT";
+            sql += " id,";
+            sql += " nome,";
+            sql += " rg,";
+            sql += " cpf,";
+            sql += " nome_pai,";
+            sql += " nome_mae,";
+            sql += " id_endereco,";
+            sql += " data_nascimento,";
+            sql += " sexo,";
+            sql += " naturalidade,";
+            sql += " estado_civil,";
+            sql += " historico_social";
+            sql += " FROM solicitante";
+            sql += " WHERE 0=0";
+
+            persistencia = new Persistencia();
+
+            if (!pCHAVE.trim().isEmpty()) {
+
+                switch (pCONSULTARPOR) {
+                    case 0:// Código                      
+                        sql += " AND id = " + pCHAVE;
+                        break;
+
+                    case 1:// Nome                        
+                        sql += " AND nome LIKE '" + pCHAVE + "%'";
+                        break;
+
+                    case 2: // Palavra-Chave
+                        sql += " AND nome LIKE '%" + pCHAVE + "%'";
+                        break;
+                }
+            }
+
+            persistencia.getPreparedStatement(sql);
+
+            while (persistencia.getResultSet(sql).next()) {
+                Solicitante solicitante = new Solicitante();
+
+                solicitante.setNome(persistencia.getResultSet(null).getString("nome"));
+                solicitante.setRg(persistencia.getResultSet(null).getString("rg"));
+                solicitante.setCpf(persistencia.getResultSet(null).getString("cpf"));
+                solicitante.setNomePai(persistencia.getResultSet(null).getString("nome_pai"));
+                solicitante.setNomeMae(persistencia.getResultSet(null).getString("nome_mae"));
+                solicitante.setIdEndereco(persistencia.getResultSet(null).getInt("id_endereco"));
+                solicitante.setDataNascimento(persistencia.getResultSet(null).getDate("data_nascimento"));
+                solicitante.setSexo(persistencia.getResultSet(null).getString("sexo"));
+                solicitante.setNaturalidade(persistencia.getResultSet(null).getString("naturalidade"));
+                solicitante.setEstadoCivil(persistencia.getResultSet(null).getString("estado_civil"));
+                solicitante.setHistoricoSocial(persistencia.getResultSet(null).getString("historico_social"));
+                solicitante.setId(persistencia.getResultSet(null).getInt("id"));
+
+                lista.add(solicitante);
+
+            }
+
+            return lista;
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
     }
 
 }

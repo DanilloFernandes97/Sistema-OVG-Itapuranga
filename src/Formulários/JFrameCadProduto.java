@@ -17,15 +17,15 @@ import javax.swing.JOptionPane;
  */
 public class JFrameCadProduto extends javax.swing.JDialog {
 
+     private int id = -1;
+    
     /**
      * Creates new form JFrameCadProduto
      */
     public JFrameCadProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-
+      
     }
 
     /**
@@ -140,7 +140,7 @@ public class JFrameCadProduto extends javax.swing.JDialog {
         if (this.validaCampos()) {
             Produto produto = new Produto();
 
-            produto.setId(-1);
+            produto.setId(id);
             produto.setNome(edtNomePro.getText());
             produto.setQuantidade(Double.parseDouble(edtQuantEntrada.getText()));
 
@@ -210,9 +210,36 @@ public class JFrameCadProduto extends javax.swing.JDialog {
         });
     }
 
-    public static boolean getFrameCadProduto() {
-        new JFrameCadProduto(null, true);
+    public static boolean getFrameCadProduto(final int id) {
+                        
+        JFrameCadProduto jFrameCadProduto = new JFrameCadProduto(null, true);
+
+        try {
+
+            jFrameCadProduto.id = id;
+
+            jFrameCadProduto.carregaObjetos();
+
+            jFrameCadProduto.setLocationRelativeTo(null);
+            jFrameCadProduto.setVisible(true);
+
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar informações do usuário. Motivo: " + ex.getMessage());
+        }
+
         return true;
+    }
+    
+    private void carregaObjetos() throws IOException, ClassNotFoundException, SQLException {
+
+        if (this.id > 0) {
+
+            Produto produto = new Produto();
+            if (new ProdutoDAO().getObjeto(id, produto)) {
+                edtNomePro.setText(produto.getNome());
+                edtQuantEntrada.setText(String.valueOf(produto.getQuantidade()));
+            }
+        }
     }
 
     public boolean validaCampos() {
