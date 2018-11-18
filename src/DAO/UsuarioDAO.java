@@ -205,11 +205,11 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
                         break;
 
                     case 1:// Nome                        
-                        sql += " AND nome LIKE '" + pCHAVE + "%'";                      
+                        sql += " AND nome LIKE '" + pCHAVE + "%'";
                         break;
 
                     case 2: // Palavra-Chave
-                        sql += " AND nome LIKE '%" + pCHAVE + "%'";                                              
+                        sql += " AND nome LIKE '%" + pCHAVE + "%'";
                         break;
                 }
             }
@@ -232,6 +232,39 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
             sql = null;
             persistencia = null;
         }
+    }
+
+    public boolean getAutenticacao(final String pNOME, final String pSENHA) throws IOException, ClassNotFoundException, SQLException {
+
+        String sql = null;
+        Persistencia persistencia = null;
+
+        try {
+
+            sql = "SELECT";
+            sql += " id";
+            sql += " FROM usuario";
+            sql += " WHERE nome = ?";
+            sql += " AND senha = ?";
+
+            persistencia = new Persistencia();
+
+            persistencia.getPreparedStatement(sql);
+
+            persistencia.setParametro(1, pNOME);
+            persistencia.setParametro(2, pSENHA);
+
+            if (persistencia.getResultSet(null).first()) {
+                return persistencia.getResultSet(null).getInt("id") > 0;
+            } else {
+                return false;
+            }
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
+
     }
 
 }

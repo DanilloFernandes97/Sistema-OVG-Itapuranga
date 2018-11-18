@@ -8,6 +8,7 @@ package main;
 import Formulários.JFrameConsProduto;
 import Formulários.JFrameConsSolicitante;
 import Formulários.JFrameConsUsuario;
+import Formulários.JFrameLoginUsuario;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        JFrameLoginUsuario jFrameLoginUsuario = new JFrameLoginUsuario(this, rootPaneCheckingEnabled);
     }
 
     /**

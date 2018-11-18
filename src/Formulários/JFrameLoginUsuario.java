@@ -5,17 +5,41 @@
  */
 package Formulários;
 
+import DAO.UsuarioDAO;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import main.Main;
+
 /**
  *
- * @author maxoe
+ * @author João Vínicius
  */
-public class JFrameLoginUsuario extends javax.swing.JFrame {
+public class JFrameLoginUsuario extends javax.swing.JDialog {
+
+    private boolean logou = false;
 
     /**
-     * Creates new form JFrameLoginUsuario
+     * Creates new form JFraneLoginUsuarioo
      */
-    public JFrameLoginUsuario() {
+    public JFrameLoginUsuario(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }
+
+    public static boolean getFrameLoginUsuario() {
+
+        JFrameLoginUsuario jFrameLoginUsuario = new JFrameLoginUsuario(null, true);
+
+        jFrameLoginUsuario.setLocationRelativeTo(null);
+        jFrameLoginUsuario.setVisible(true);
+
+        return jFrameLoginUsuario.logou;
+
     }
 
     /**
@@ -27,29 +51,38 @@ public class JFrameLoginUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        edtUsuario = new javax.swing.JTextField();
+        edtSenha = new javax.swing.JPasswordField();
+        btnEntrar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Login\n");
-        setFont(new java.awt.Font("Arial", 1, 10)); // NOI18N
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Autenticação");
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Login 96x96.png"))); // NOI18N
 
         jLabel1.setText("Usuário");
 
         jLabel2.setText("Senha");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Entrar png 32x32.png"))); // NOI18N
-        jButton1.setText("Entrar");
+        btnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Entrar png 32x32.png"))); // NOI18N
+        btnEntrar.setText("Entrar");
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Sair 32x32.png"))); // NOI18N
-        jButton2.setText("Sair");
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Login 96x96.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Sair 32x32.png"))); // NOI18N
+        btnSair.setText("Sair");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,13 +95,13 @@ public class JFrameLoginUsuario extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnEntrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnSair))
+                    .addComponent(edtUsuario)
+                    .addComponent(edtSenha))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -77,15 +110,15 @@ public class JFrameLoginUsuario extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(edtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnEntrar)
+                    .addComponent(btnSair))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -93,8 +126,52 @@ public class JFrameLoginUsuario extends javax.swing.JFrame {
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+
+        if (this.validaCampos()) {
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+            try {
+
+                logou = usuarioDAO.getAutenticacao(edtUsuario.getText().trim(), edtSenha.getText().trim());
+                
+                if (logou) {
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuário ou/e senha incorretos.");
+                }
+
+            } catch (IOException | ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(JFrameLoginUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+
+    }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private boolean validaCampos() {
+        if (edtUsuario.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo usuário é obrigatório e não foi preenchido.");
+            edtUsuario.requestFocus();
+            return false;
+        }
+
+        if (edtSenha.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo senha é obrigatório e não foi preenchido.");
+            edtUsuario.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+       System.exit(0);
+    }//GEN-LAST:event_btnSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,22 +199,30 @@ public class JFrameLoginUsuario extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(JFrameLoginUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFrameLoginUsuario().setVisible(true);
+                JFrameLoginUsuario dialog = new JFrameLoginUsuario(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEntrar;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JPasswordField edtSenha;
+    private javax.swing.JTextField edtUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
