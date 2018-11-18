@@ -29,7 +29,7 @@ public class JFrameConsSolicitante extends javax.swing.JDialog {
         initComponents();
         btnConsultar.doClick();
     }
-    
+
     public static boolean getFrameConsSolicitante() {
 
         JFrameConsSolicitante jFrameConsSolicitante = new JFrameConsSolicitante(null, true);
@@ -99,14 +99,14 @@ public class JFrameConsSolicitante extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Código", "Nome"
+                "Código", "Nome", "Data nascimento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -263,8 +263,8 @@ public class JFrameConsSolicitante extends javax.swing.JDialog {
     }//GEN-LAST:event_jTableKeyPressed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        //if (JFrameCadUsuario.getFrameCadUsuario((int) jTable.getValueAt(jTable.getSelectedRow(), 0))) {
-        if (JFrameCadSolicitante.getFrameCadSolicitantes()) {
+
+        if (JFrameCadSolicitante.getFrameCadSolicitantes((int) jTable.getValueAt(jTable.getSelectedRow(), 0))) {
             try {
                 this.readJTable();
             } catch (ClassNotFoundException | SQLException | IOException ex) {
@@ -291,7 +291,7 @@ public class JFrameConsSolicitante extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        if (JFrameCadSolicitante.getFrameCadSolicitantes()) {
+        if (JFrameCadSolicitante.getFrameCadSolicitantes(-1)) {
             try {
                 this.readJTable();
             } catch (ClassNotFoundException | SQLException | IOException ex) {
@@ -365,9 +365,43 @@ public class JFrameConsSolicitante extends javax.swing.JDialog {
 
             modelo.addRow(new Object[]{
                 s.getId(),
-                s.getNome()
+                s.getNome(),
+                this.formataDataBrasileira(s.getDataNascimento().toString())
             }
             );
+        }
+    }
+
+    public String formataDataBrasileira(String data) {
+        this.validaData(data);
+
+        String ano = data.substring(0, 4);
+        String mes = data.substring(5, 7);
+        String dia = data.substring(8, 10);
+
+        return dia + '/' + mes + '/' + ano;
+
+    }
+
+    public boolean validaData(String data) {
+        int dia;
+        int mes;
+        int ano;
+
+        if (data.contains("-")) {
+            ano = Integer.parseInt(data.substring(0, 4));
+            mes = Integer.parseInt(data.substring(5, 7));
+            dia = Integer.parseInt(data.substring(8, 10));
+        } else {
+            dia = Integer.parseInt(data.substring(0, 2));
+            mes = Integer.parseInt(data.substring(3, 5));
+            ano = Integer.parseInt(data.substring(6, 10));
+        }
+
+        if (dia > 0 && dia < 32 && mes > 0 && mes < 13 && ano > 0 && ((mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) || ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia <= 30) || (mes == 2 && (dia <= 29 && ano % 4 == 0 && (ano % 100 != 0 || ano % 400 == 0)) || dia <= 28))) {
+            return true;
+        } else {
+            return false;
         }
     }
 

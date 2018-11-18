@@ -1,6 +1,5 @@
 package DAO;
 
-import bean.Produto;
 import bean.Solicitante;
 import interface_persistencia.InterfacePersistencia;
 import java.io.IOException;
@@ -54,7 +53,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
 
             } else {
 
-                sql = "UPDATE aluno SET";
+                sql = "UPDATE solicitante SET";
                 sql = sql + " nome = ?,";
                 sql = sql + " rg = ?,";
                 sql = sql + " cpf = ?,";
@@ -168,7 +167,8 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
             sql = sql + " sexo,";
             sql = sql + " naturalidade,";
             sql = sql + " estado_civil,";
-            sql = sql + " historico_social";
+            sql = sql + " historico_social,";
+            sql = sql + " id";
             sql += " FROM solicitante";
             sql += " WHERE id = ?";
 
@@ -214,6 +214,8 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
         boolean retorno = false;
 
         try {
+
+            persistencia = new Persistencia();
 
             sql = "DELETE FROM solicitante WHERE id = ?";
 

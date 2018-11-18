@@ -21,8 +21,7 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
 
                 pObjeto.setId(this.getProximoCodigo());
 
-                sql = "INSERT INTO produto(";
-                sql = sql + " id,";
+                sql = "INSERT INTO despesas_familiares(";
                 sql = sql + " id_solicitante,";
                 sql = sql + " valor_moradia,";
                 sql = sql + " valor_energia,";
@@ -32,7 +31,8 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
                 sql = sql + " valor_gas,";
                 sql = sql + " valor_telefone,";
                 sql = sql + " valor_financiamento,";
-                sql = sql + " valor_outros";
+                sql = sql + " valor_outros,";
+                sql = sql + " id";
                 sql = sql + ")VALUES(";
                 sql = sql + " ?,";
                 sql = sql + " ?,";
@@ -49,8 +49,7 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
 
             } else {
 
-                sql = "UPDATE produto SET";
-                sql = sql + " id = ?,";
+                sql = "UPDATE despesas_familiares SET";
                 sql = sql + " id_solicitante = ?,";
                 sql = sql + " valor_moradia = ?,";
                 sql = sql + " valor_energia = ?,";
@@ -68,16 +67,17 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
 
             persistencia.getPreparedStatement(sql);
 
-            persistencia.setParametro(1, pObjeto.getId());
-            persistencia.setParametro(2, pObjeto.getIdSolicitante());
+            persistencia.setParametro(1, pObjeto.getIdSolicitante());
+            persistencia.setParametro(2, pObjeto.getValorMoradia());
             persistencia.setParametro(3, pObjeto.getValorEnergia());
             persistencia.setParametro(4, pObjeto.getValorAgua());
             persistencia.setParametro(5, pObjeto.getValorAlimentacao());
             persistencia.setParametro(6, pObjeto.getValorFarmacia());
-            persistencia.setParametro(8, pObjeto.getValorGas());
-            persistencia.setParametro(9, pObjeto.getValorTelefone());
-            persistencia.setParametro(3, pObjeto.getValorFinanciamento());
-            persistencia.setParametro(3, pObjeto.getValorOutros());
+            persistencia.setParametro(7, pObjeto.getValorGas());
+            persistencia.setParametro(8, pObjeto.getValorTelefone());
+            persistencia.setParametro(9, pObjeto.getValorFinanciamento());
+            persistencia.setParametro(10, pObjeto.getValorOutros());
+            persistencia.setParametro(11, pObjeto.getId());
 
             retorno = persistencia.getPreparedStatement(null).executeUpdate() > 0;
 
@@ -176,7 +176,7 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
             if (persistencia.getResultSet(null).first()) {
 
                 pObjeto.setId(persistencia.getResultSet(null).getInt("id"));
-                pObjeto.setIdSolicitante(persistencia.getResultSet(null).getInt("id_solicitant"));
+                pObjeto.setIdSolicitante(persistencia.getResultSet(null).getInt("id_solicitante"));
                 pObjeto.setValorMoradia(persistencia.getResultSet(null).getDouble("valor_moradia"));
                 pObjeto.setValorEnergia(persistencia.getResultSet(null).getDouble("valor_energia"));
                 pObjeto.setValorAgua(persistencia.getResultSet(null).getDouble("valor_agua"));
@@ -223,6 +223,40 @@ public class DespesasFamiliaresDAO implements InterfacePersistencia<DespesasFami
         }
 
         return retorno;
+
+    }
+
+    public int getIdDespesasFamiliares(final int pIDSOLICITANTE) throws ClassNotFoundException, SQLException, IOException {
+        String sql = null;
+        Persistencia persistencia = null;
+
+        try {
+
+            sql = "SELECT";
+            sql += "  id";
+            sql += " FROM despesas_familiares";
+            sql += " WHERE id_solicitante = ?";
+
+            persistencia = new Persistencia();
+
+            persistencia.getPreparedStatement(sql);
+
+            persistencia.setParametro(1, pIDSOLICITANTE);
+
+            if (persistencia.getResultSet(null).first()) {
+
+                return persistencia.getResultSet(null).getInt("id");
+
+            } else {
+                
+                return -1;
+                
+            }
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
 
     }
 
