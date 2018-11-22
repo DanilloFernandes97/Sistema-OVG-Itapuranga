@@ -11,8 +11,12 @@ import Formulários.JFrameConsUsuario;
 import Formulários.JFrameLoginUsuario;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -24,6 +28,19 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() {
+        try {
+            try {        
+                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (ClassNotFoundException | InstantiationException e) {
+            // TODO
+        }
+        // TODO
+         catch (IllegalAccessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         
