@@ -37,11 +37,17 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icons/Main/Usu&#xe1;rios_mini.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Usu&#xe1;rios"/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu4">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Icons/Main/Sobre.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Sobre"/>
           </Properties>
         </Menu>
@@ -85,8 +91,8 @@
   <SubComponents>
     <Container class="javax.swing.JDesktopPane" name="jDesktopPane1">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDesktopPane(){&#xa;&#xa;public void paintComponent(Graphics g){&#xa;g.drawImage(image,0,0,getWidth(),getHeight(),this);&#xa;}&#xa;}"/>
-        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ImageIcon icon = new ImageIcon(getClass().getResource(&quot;/Icons/FundoSISTEMAOVG.jpg&quot;));&#xa;Image image = icon.getImage();"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JDesktopPane(){&#xa;&#xa;    public void paintComponent(Graphics g){&#xa;        g.drawImage(image,0,0,getWidth(),getHeight(),this);&#xa;    }&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="ImageIcon icon = new ImageIcon(getClass().getResource(&quot;/Icons/FundoOVG.png&quot;));&#xa;Image image = icon.getImage();"/>
       </AuxValues>
 
       <Layout>

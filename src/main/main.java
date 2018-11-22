@@ -81,7 +81,7 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        ImageIcon icon = new ImageIcon(getClass().getResource("/Icons/FundoSISTEMAOVG.jpg"));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/Icons/FundoOVG.png"));
         Image image = icon.getImage();
         jDesktopPane1 = new javax.swing.JDesktopPane(){
 
@@ -175,9 +175,11 @@ public class Main extends javax.swing.JFrame {
         jMenu2.setText("Processos");
         jMenuBar1.add(jMenu2);
 
+        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Usuários_mini.png"))); // NOI18N
         jMenu3.setText("Usuários");
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Sobre.png"))); // NOI18N
         jMenu4.setText("Sobre");
         jMenuBar1.add(jMenu4);
 
