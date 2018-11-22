@@ -165,7 +165,9 @@ public class JFrameCadProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        // TODO add your handling code here:
+        this.id = -1;
+        edtNomePro.setText("");
+        edtQuantEntrada.setText("0");
     }//GEN-LAST:event_btnNovoActionPerformed
 
     /**
