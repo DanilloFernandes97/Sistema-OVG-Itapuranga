@@ -9,6 +9,10 @@ import Formulários.JFrameConsProduto;
 import Formulários.JFrameConsSolicitante;
 import Formulários.JFrameConsUsuario;
 import Formulários.JFrameLoginUsuario;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -22,7 +26,32 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        JFrameLoginUsuario jFrameLoginUsuario = new JFrameLoginUsuario(this, rootPaneCheckingEnabled);
+        
+        //Botão Solicitantes
+        btnSolicitantes.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnSolicitantes.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnSolicitantes.setOpaque(false);
+        // btnSolicitantes.setContentAreaFilled(false);
+        btnSolicitantes.setBorderPainted(false);
+        btnSolicitantes.setFocusPainted(false);
+        
+        //Botão Usuários 
+        btnUsuarios.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnUsuarios.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnUsuarios.setOpaque(false);
+        //btnUsuarios.setContentAreaFilled(false);
+        btnUsuarios.setBorderPainted(false);
+        btnUsuarios.setFocusPainted(false);
+        
+        //Botão Produto
+        btnCadProdutos.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnCadProdutos.setHorizontalTextPosition(SwingConstants.CENTER);
+        btnCadProdutos.setOpaque(false);
+        //btnCadProdutos.setContentAreaFilled(false);
+        btnCadProdutos.setBorderPainted(false);
+        btnCadProdutos.setFocusPainted(false);
+        
+        //JFrameLoginUsuario jFrameLoginUsuario = new JFrameLoginUsuario(this, rootPaneCheckingEnabled);
     }
 
     /**
@@ -34,14 +63,41 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/Icons/FundoSISTEMAOVG.jpg"));
+        Image image = icon.getImage();
+        jDesktopPane1 = new javax.swing.JDesktopPane(){
+
+            public void paintComponent(Graphics g){
+                g.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+        };
         btnSolicitantes = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
         btnCadProdutos = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema OVG");
         setName("FrameMain"); // NOI18N
 
+        btnSolicitantes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSolicitantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Solicitantes.png"))); // NOI18N
         btnSolicitantes.setText("Solicitantes");
         btnSolicitantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -49,6 +105,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Usuários.png"))); // NOI18N
         btnUsuarios.setText("Usuários");
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,6 +114,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        btnCadProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnCadProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Produto.png"))); // NOI18N
         btnCadProdutos.setText("Produtos");
         btnCadProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,28 +123,58 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
+        jDesktopPane1.setLayout(jDesktopPane1Layout);
+        jDesktopPane1Layout.setHorizontalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnSolicitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCadProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(209, Short.MAX_VALUE))
+        );
+        jDesktopPane1Layout.setVerticalGroup(
+            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSolicitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCadProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(242, Short.MAX_VALUE))
+        );
+        jDesktopPane1.setLayer(btnSolicitantes, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnUsuarios, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnCadProdutos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Cadastro.png"))); // NOI18N
+        jMenu1.setText("Cadastros");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Processos.png"))); // NOI18N
+        jMenu2.setText("Processos");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Usuários");
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Sobre");
+        jMenuBar1.add(jMenu4);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnSolicitantes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnCadProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnSolicitantes, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE)
-                    .addComponent(btnCadProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(211, Short.MAX_VALUE))
+            .addComponent(jDesktopPane1)
         );
 
         pack();
@@ -95,7 +185,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSolicitantesActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-        JFrameConsUsuario.getFrameConsUsuario();
+       JFrameConsUsuario.getFrameConsUsuario();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnCadProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadProdutosActionPerformed
@@ -141,5 +231,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnCadProdutos;
     private javax.swing.JButton btnSolicitantes;
     private javax.swing.JButton btnUsuarios;
+    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
