@@ -8,6 +8,7 @@ package Formulários;
 import DAO.DespesasFamiliaresDAO;
 import DAO.SolicitanteDAO;
 import bean.DespesasFamiliares;
+import bean.Endereco;
 import bean.Solicitante;
 import java.sql.Date;
 import javax.swing.JOptionPane;
@@ -42,7 +43,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         edtNome = new javax.swing.JTextField();
-        ComboboxSexo = new javax.swing.JComboBox<String>();
+        ComboboxSexo = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         edtCpf = new javax.swing.JFormattedTextField();
         edtRg = new javax.swing.JTextField();
@@ -51,7 +52,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         edtNaturalidade = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        ComboboxEstadoCivil = new javax.swing.JComboBox<String>();
+        ComboboxEstadoCivil = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaHistoricoSocial = new javax.swing.JTextArea();
@@ -92,12 +93,12 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        edtValorFinancimento = new javax.swing.JFormattedTextField();
+        edtValorFinanciamento = new javax.swing.JFormattedTextField();
         edtValorTelefone = new javax.swing.JFormattedTextField();
         edtValorOutros = new javax.swing.JFormattedTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
-        jFormattedTextField5 = new javax.swing.JFormattedTextField();
+        edtValorTotal = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
@@ -105,13 +106,15 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        edtLogadouro = new javax.swing.JTextField();
+        edtBairro = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        edtCep = new javax.swing.JFormattedTextField();
         jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        jTextField6 = new javax.swing.JTextField();
+        edtNumero = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jTextField6 = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
@@ -127,7 +130,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         edtNome.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        ComboboxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Feminino" }));
+        ComboboxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
 
         jLabel4.setText("RG");
 
@@ -143,7 +146,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         jLabel7.setText("Estado Civil");
 
-        ComboboxEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Solteiro", "Casado", "Separado", "Divorciado", "Viúvo" }));
+        ComboboxEstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Solteiro", "Casado", "Separado", "Divorciado", "Viúvo" }));
 
         jLabel8.setText("Histórico social");
 
@@ -398,6 +401,14 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         edtValorMoradia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edtValorMoradia.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorMoradia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                edtValorMoradiaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorMoradiaFocusLost(evt);
+            }
+        });
 
         jLabel16.setText("Alimentação");
 
@@ -405,24 +416,49 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         edtValorEnergia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edtValorEnergia.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorEnergia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorEnergiaFocusLost(evt);
+            }
+        });
 
         jLabel14.setText("Água");
 
         edtValorAgua.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edtValorAgua.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorAgua.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorAguaFocusLost(evt);
+            }
+        });
 
         edtValorAlimentacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edtValorAlimentacao.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorAlimentacao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorAlimentacaoFocusLost(evt);
+            }
+        });
 
         jLabel13.setText("Farmácia");
 
         edtValorFarmacia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edtValorFarmacia.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorFarmacia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorFarmaciaFocusLost(evt);
+            }
+        });
 
         jLabel15.setText("Gás");
 
         edtValorGas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edtValorGas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorGas.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorGasFocusLost(evt);
+            }
+        });
 
         jLabel18.setText("Financiamento/Empréstimo");
 
@@ -430,14 +466,29 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         jLabel20.setText("Outros");
 
-        edtValorFinancimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        edtValorFinancimento.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorFinanciamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        edtValorFinanciamento.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorFinanciamento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorFinanciamentoFocusLost(evt);
+            }
+        });
 
         edtValorTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edtValorTelefone.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorTelefone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorTelefoneFocusLost(evt);
+            }
+        });
 
         edtValorOutros.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
         edtValorOutros.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        edtValorOutros.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtValorOutrosFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -451,17 +502,17 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                     .addComponent(edtValorMoradia, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel16)
                     .addComponent(jLabel18)
-                    .addComponent(edtValorFinancimento))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                    .addComponent(edtValorFinanciamento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(edtValorFarmacia)
-                        .addComponent(edtValorTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE))
+                        .addComponent(edtValorTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel19)
                     .addComponent(jLabel13)
                     .addComponent(jLabel12)
                     .addComponent(edtValorEnergia, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel15)
@@ -507,7 +558,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                     .addComponent(jLabel20))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtValorFinancimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtValorFinanciamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtValorTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtValorOutros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -519,7 +570,8 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jLabel31.setForeground(new java.awt.Color(255, 0, 0));
         jLabel31.setText("Total :");
 
-        jFormattedTextField5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        edtValorTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        edtValorTotal.setEnabled(false);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -529,7 +581,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel31)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                .addComponent(edtValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -537,7 +589,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jFormattedTextField5)
+                    .addComponent(edtValorTotal)
                     .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
         );
@@ -548,20 +600,20 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(175, 175, 175)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Despesas familiares", jPanel3);
@@ -579,7 +631,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jLabel30.setText("Nº");
 
         try {
-            jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##### - ###")));
+            edtCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##### - ###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -593,37 +645,42 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/limpar.png"))); // NOI18N
         jButton4.setText("Limpar");
 
+        jLabel32.setText("Complemento");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                    .addComponent(jLabel27)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel26)
-                    .addComponent(jTextField3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(edtBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                            .addComponent(jLabel27)
+                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel25)
+                            .addComponent(jLabel26)
+                            .addComponent(edtLogadouro))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel28)
                             .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jFormattedTextField4)
-                        .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(59, 59, 59))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                                .addComponent(edtNumero, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jFormattedTextField4)
+                                .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(59, 59, 59))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jTextField6)
+                        .addGap(90, 90, 90)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel32)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,15 +691,15 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                     .addComponent(jLabel30))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtLogadouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
                     .addComponent(jLabel29))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -651,9 +708,13 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jButton4)
+                    .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
 
@@ -742,6 +803,91 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNovoActionPerformed
 
+    private void somaDespesas() {
+        double valorTotal = 0;
+
+        double valorMoradia = Double.parseDouble(edtValorMoradia.getText().trim());
+        double valorEnergia = Double.parseDouble(edtValorEnergia.getText().trim());
+        double valorAgua = Double.parseDouble(edtValorAgua.getText().trim());
+        double valorAlimentacao = Double.parseDouble(edtValorAlimentacao.getText().trim());
+        double valorFarmacia = Double.parseDouble(edtValorFarmacia.getText().trim());
+        double valorGas = Double.parseDouble(edtValorGas.getText().trim());
+        double valorFinanciamento = Double.parseDouble(edtValorFinanciamento.getText().trim());
+        double valorTelefone = Double.parseDouble(edtValorTelefone.getText().trim());
+        double valorOutros = Double.parseDouble(edtValorOutros.getText().trim());
+
+        valorTotal = valorMoradia + valorEnergia + valorAgua + valorAlimentacao + valorFarmacia + valorGas + valorFinanciamento + valorTelefone + valorOutros;
+
+        edtValorTotal.setText(String.valueOf(valorTotal));
+    }
+
+    private void edtValorMoradiaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorMoradiaFocusLost
+        if (edtValorMoradia.getText().trim().isEmpty()) {
+            edtValorMoradia.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorMoradiaFocusLost
+
+    private void edtValorEnergiaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorEnergiaFocusLost
+        if (edtValorEnergia.getText().trim().isEmpty()) {
+            edtValorEnergia.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorEnergiaFocusLost
+
+    private void edtValorAguaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorAguaFocusLost
+        if (edtValorAgua.getText().trim().isEmpty()) {
+            edtValorAgua.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorAguaFocusLost
+
+    private void edtValorAlimentacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorAlimentacaoFocusLost
+        if (edtValorAlimentacao.getText().trim().isEmpty()) {
+            edtValorAlimentacao.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorAlimentacaoFocusLost
+
+    private void edtValorFarmaciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorFarmaciaFocusLost
+        if (edtValorFarmacia.getText().trim().isEmpty()) {
+            edtValorFarmacia.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorFarmaciaFocusLost
+
+    private void edtValorGasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorGasFocusLost
+        if (edtValorGas.getText().trim().isEmpty()) {
+            edtValorGas.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorGasFocusLost
+
+    private void edtValorFinanciamentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorFinanciamentoFocusLost
+        if (edtValorFinanciamento.getText().trim().isEmpty()) {
+            edtValorFinanciamento.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorFinanciamentoFocusLost
+
+    private void edtValorTelefoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorTelefoneFocusLost
+        if (edtValorTelefone.getText().trim().isEmpty()) {
+            edtValorTelefone.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorTelefoneFocusLost
+
+    private void edtValorOutrosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorOutrosFocusLost
+        if (edtValorOutros.getText().trim().isEmpty()) {
+            edtValorOutros.setText("0");
+        }
+        this.somaDespesas();
+    }//GEN-LAST:event_edtValorOutrosFocusLost
+
+    private void edtValorMoradiaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtValorMoradiaFocusGained
+        edtValorMoradia.selectAll();
+    }//GEN-LAST:event_edtValorMoradiaFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -791,22 +937,27 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JTextField edtBairro;
+    private javax.swing.JFormattedTextField edtCep;
     private javax.swing.JFormattedTextField edtCpf;
     private javax.swing.JFormattedTextField edtDataNascimento;
+    private javax.swing.JTextField edtLogadouro;
     private javax.swing.JTextField edtNaturalidade;
     private javax.swing.JTextField edtNome;
     private javax.swing.JTextField edtNomeMae;
     private javax.swing.JTextField edtNomePai;
+    private javax.swing.JTextField edtNumero;
     private javax.swing.JTextField edtRg;
     private javax.swing.JFormattedTextField edtValorAgua;
     private javax.swing.JFormattedTextField edtValorAlimentacao;
     private javax.swing.JFormattedTextField edtValorEnergia;
     private javax.swing.JFormattedTextField edtValorFarmacia;
-    private javax.swing.JFormattedTextField edtValorFinancimento;
+    private javax.swing.JFormattedTextField edtValorFinanciamento;
     private javax.swing.JFormattedTextField edtValorGas;
     private javax.swing.JFormattedTextField edtValorMoradia;
     private javax.swing.JFormattedTextField edtValorOutros;
     private javax.swing.JFormattedTextField edtValorTelefone;
+    private javax.swing.JFormattedTextField edtValorTotal;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -814,9 +965,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
     private javax.swing.JFormattedTextField jFormattedTextField4;
-    private javax.swing.JFormattedTextField jFormattedTextField5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -842,6 +991,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -860,8 +1010,6 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextArea textAreaHistoricoSocial;
@@ -888,6 +1036,17 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             edtRg.requestFocus();
             return false;
         }
+
+        return true;
+    }
+
+    private boolean salvarEndereco() {
+        Endereco endereco = new Endereco();
+
+        endereco.setLogadouro(edtLogadouro.getText().trim());
+        endereco.setBairro(edtBairro.getText().trim());
+        endereco.setCep(edtCep.getText().trim());
+        // endereco.set
 
         return true;
     }
@@ -932,7 +1091,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         despesasFamiliares.setValorAlimentacao(Double.parseDouble(edtValorAlimentacao.getText()));
         despesasFamiliares.setValorEnergia(Double.parseDouble(edtValorEnergia.getText()));
         despesasFamiliares.setValorFarmacia(Double.parseDouble(edtValorFarmacia.getText()));
-        despesasFamiliares.setValorFinanciamento(Double.parseDouble(edtValorFinancimento.getText()));
+        despesasFamiliares.setValorFinanciamento(Double.parseDouble(edtValorFinanciamento.getText()));
         despesasFamiliares.setValorGas(Double.parseDouble(edtValorGas.getText()));
         despesasFamiliares.setValorMoradia(Double.parseDouble(edtValorMoradia.getText()));
         despesasFamiliares.setValorOutros(Double.parseDouble(edtValorOutros.getText()));
@@ -1046,7 +1205,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                     edtValorAlimentacao.setText(String.valueOf(despesasFamiliares.getValorAlimentacao()));
                     edtValorFarmacia.setText(String.valueOf(despesasFamiliares.getValorFarmacia()));
                     edtValorGas.setText(String.valueOf(despesasFamiliares.getValorGas()));
-                    edtValorFinancimento.setText(String.valueOf(despesasFamiliares.getValorFinanciamento()));
+                    edtValorFinanciamento.setText(String.valueOf(despesasFamiliares.getValorFinanciamento()));
                     edtValorTelefone.setText(String.valueOf(despesasFamiliares.getValorTelefone()));
                     edtValorOutros.setText(String.valueOf(despesasFamiliares.getValorOutros()));
 
@@ -1056,7 +1215,19 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null, "Erro ao retornar dados do solicitante. Motivo: " + ex.getMessage());
 
             }
+        } else {
+            edtValorMoradia.setText("0");
+            edtValorEnergia.setText("0");
+            edtValorAgua.setText("0");
+            edtValorAlimentacao.setText("0");
+            edtValorFarmacia.setText("0");
+            edtValorGas.setText("0");
+            edtValorFinanciamento.setText("0");
+            edtValorTelefone.setText("0");
+            edtValorOutros.setText("0");
         }
+
+        this.somaDespesas();
 
     }
 
