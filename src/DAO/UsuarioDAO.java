@@ -267,4 +267,31 @@ public class UsuarioDAO implements InterfacePersistencia<Usuario> {
 
     }
 
+    public boolean getExisteUsuarioCadastrado() throws IOException, ClassNotFoundException, SQLException {
+
+        String sql = null;
+        boolean retorno = false;
+        Persistencia persistencia = null;
+
+        try {
+
+            sql = "SELECT COUNT(id) FROM usuario;";
+
+            persistencia = new Persistencia();
+
+            persistencia.preparaResultSet(true, sql);
+
+            if (persistencia.getResultSet(null).first()) {
+                retorno = persistencia.getResultSet(null).getInt(1) > 0;
+            }
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
+
+        return retorno;
+
+    }
+
 }

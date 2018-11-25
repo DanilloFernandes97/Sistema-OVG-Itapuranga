@@ -5,6 +5,13 @@
  */
 package Formulários;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
+
 /**
  *
  * @author Geús Junior
@@ -14,8 +21,9 @@ public class JFrameSobre extends javax.swing.JFrame {
     /**
      * Creates new form JFrameSobre
      */
-    public JFrameSobre() {        
+    public JFrameSobre() {
         initComponents();
+        this.setAcessibilidade();
         this.setLocationRelativeTo(null);
     }
 
@@ -36,7 +44,7 @@ public class JFrameSobre extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sobre");
 
         jPanel1.setBackground(new java.awt.Color(114, 202, 175));
@@ -162,6 +170,16 @@ public class JFrameSobre extends javax.swing.JFrame {
             public void run() {
                 new JFrameSobre().setVisible(true);
             }
+        });
+    }
+
+    public void setAcessibilidade() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }                        
         });
     }
 

@@ -7,9 +7,17 @@ package Formulários;
 
 import DAO.UsuarioDAO;
 import bean.Usuario;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashSet;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -25,6 +33,22 @@ public class JFrameCadUsuario extends javax.swing.JDialog {
     public JFrameCadUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        this.setAcessibilidade();
+
+        HashSet conj = new HashSet(this.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+        conj.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+        this.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
+    }
+
+    public void setAcessibilidade() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     public JFrameCadUsuario() {
@@ -49,6 +73,12 @@ public class JFrameCadUsuario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de usuário");
+
+        edtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edtNomeKeyPressed(evt);
+            }
+        });
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Salva.png"))); // NOI18N
         btnSalvar.setText("Salvar - F6");
@@ -137,6 +167,10 @@ public class JFrameCadUsuario extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
+    private void edtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtNomeKeyPressed
+
+    }//GEN-LAST:event_edtNomeKeyPressed
+
     private boolean ValidaCampos() {
 
         if (edtNome.getText().trim().isEmpty()) {
@@ -196,15 +230,17 @@ public class JFrameCadUsuario extends javax.swing.JDialog {
         });
     }
 
-    public static boolean getFrameCadUsuario(final int id) {
+    public static boolean getFrameCadUsuario(final int pID) {
 
         JFrameCadUsuario jFrameCadUsuario = new JFrameCadUsuario(null, true);
 
         try {
 
-            jFrameCadUsuario.id = id;
+            jFrameCadUsuario.id = pID;
 
-            jFrameCadUsuario.carregaObjetos();
+            if (pID > 0) {
+                jFrameCadUsuario.carregaObjetos();
+            }
 
             jFrameCadUsuario.setLocationRelativeTo(null);
             jFrameCadUsuario.setVisible(true);

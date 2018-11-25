@@ -5,13 +5,14 @@
  */
 package main;
 
+import Formulários.JFrameCadProduto;
+import Formulários.JFrameCadSolicitante;
 import Formulários.JFrameCadUsuario;
 import Formulários.JFrameConsProduto;
 import Formulários.JFrameConsSolicitante;
 import Formulários.JFrameConsUsuario;
 import Formulários.JFrameLoginUsuario;
 import Formulários.JFrameSobre;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.logging.Level;
@@ -32,21 +33,20 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         try {
-            try {        
+            try {
                 UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (ClassNotFoundException | InstantiationException e) {
             // TODO
-        }
-        // TODO
-         catch (IllegalAccessException ex) {
+        } // TODO
+        catch (IllegalAccessException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
-        
+
         //Botão Solicitantes
         btnSolicitantes.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnSolicitantes.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -54,7 +54,7 @@ public class Main extends javax.swing.JFrame {
         // btnSolicitantes.setContentAreaFilled(false);
         btnSolicitantes.setBorderPainted(false);
         btnSolicitantes.setFocusPainted(false);
-        
+
         //Botão Usuários 
         btnUsuarios.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnUsuarios.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -62,7 +62,7 @@ public class Main extends javax.swing.JFrame {
         //btnUsuarios.setContentAreaFilled(false);
         btnUsuarios.setBorderPainted(false);
         btnUsuarios.setFocusPainted(false);
-        
+
         //Botão Produto
         btnCadProdutos.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnCadProdutos.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -70,7 +70,7 @@ public class Main extends javax.swing.JFrame {
         //btnCadProdutos.setContentAreaFilled(false);
         btnCadProdutos.setBorderPainted(false);
         btnCadProdutos.setFocusPainted(false);
-        
+
         //Botão Processos
         btnProcessos.setVerticalTextPosition(SwingConstants.BOTTOM);
         btnProcessos.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -78,8 +78,8 @@ public class Main extends javax.swing.JFrame {
         //btnProcessos.setContentAreaFilled(false);
         btnProcessos.setBorderPainted(false);
         btnProcessos.setFocusPainted(false);
-        
-        //JFrameLoginUsuario jFrameLoginUsuario = new JFrameLoginUsuario(this, rootPaneCheckingEnabled);
+
+        JFrameLoginUsuario jFrameLoginUsuario = new JFrameLoginUsuario(this, rootPaneCheckingEnabled);
     }
 
     /**
@@ -106,9 +106,9 @@ public class Main extends javax.swing.JFrame {
         btnProcessos = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItemSolicitantes = new javax.swing.JMenuItem();
+        jMenuItemUsuarios = new javax.swing.JMenuItem();
+        jMenuItemProdutos = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -163,6 +163,11 @@ public class Main extends javax.swing.JFrame {
         btnProcessos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Processos.png"))); // NOI18N
         btnProcessos.setText("Processos");
 
+        jDesktopPane1.setLayer(btnSolicitantes, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnUsuarios, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnCadProdutos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnProcessos, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
@@ -189,34 +194,40 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(btnProcessos, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(242, Short.MAX_VALUE))
         );
-        jDesktopPane1.setLayer(btnSolicitantes, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnUsuarios, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnCadProdutos, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(btnProcessos, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Cadastro.png"))); // NOI18N
         jMenu1.setText("Cadastros");
         jMenu1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        jMenuItem4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Solicitantes_mini.png"))); // NOI18N
-        jMenuItem4.setText("Solicitantes");
-        jMenu1.add(jMenuItem4);
-
-        jMenuItem5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Usuários_mini.png"))); // NOI18N
-        jMenuItem5.setText("Usuários");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemSolicitantes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuItemSolicitantes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Solicitantes_mini.png"))); // NOI18N
+        jMenuItemSolicitantes.setText("Solicitantes");
+        jMenuItemSolicitantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                jMenuItemSolicitantesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem5);
+        jMenu1.add(jMenuItemSolicitantes);
 
-        jMenuItem6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Produto_mini.png"))); // NOI18N
-        jMenuItem6.setText("Produtos");
-        jMenu1.add(jMenuItem6);
+        jMenuItemUsuarios.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuItemUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Usuários_mini.png"))); // NOI18N
+        jMenuItemUsuarios.setText("Usuários");
+        jMenuItemUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemUsuarios);
+
+        jMenuItemProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jMenuItemProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Main/Produto_mini.png"))); // NOI18N
+        jMenuItemProdutos.setText("Produtos");
+        jMenuItemProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemProdutosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemProdutos);
 
         jMenuBar1.add(jMenu1);
 
@@ -247,6 +258,11 @@ public class Main extends javax.swing.JFrame {
         jMenuUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jMenuUsuarioMouseClicked(evt);
+            }
+        });
+        jMenuUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuUsuarioActionPerformed(evt);
             }
         });
         jMenuBar1.add(jMenuUsuario);
@@ -290,16 +306,16 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSolicitantesActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-       JFrameConsUsuario.getFrameConsUsuario();
+        JFrameConsUsuario.getFrameConsUsuario();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnCadProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadProdutosActionPerformed
         JFrameConsProduto.getFrameConsProduto();
     }//GEN-LAST:event_btnCadProdutosActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    private void jMenuItemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUsuariosActionPerformed
+        JFrameCadUsuario.getFrameCadUsuario(-1);
+    }//GEN-LAST:event_jMenuItemUsuariosActionPerformed
 
     private void jMenuSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuSairMouseClicked
         System.exit(0);
@@ -311,9 +327,20 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuSobreMouseClicked
 
     private void jMenuUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuUsuarioMouseClicked
-        JFrameCadUsuario usuario = new JFrameCadUsuario();
-        usuario.setVisible(true);
+        JFrameConsUsuario.getFrameConsUsuario();
     }//GEN-LAST:event_jMenuUsuarioMouseClicked
+
+    private void jMenuItemSolicitantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSolicitantesActionPerformed
+        JFrameCadSolicitante.getFrameCadSolicitantes(-1);
+    }//GEN-LAST:event_jMenuItemSolicitantesActionPerformed
+
+    private void jMenuItemProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProdutosActionPerformed
+        JFrameCadProduto.getFrameCadProduto(-1);
+    }//GEN-LAST:event_jMenuItemProdutosActionPerformed
+
+    private void jMenuUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -363,9 +390,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItemProdutos;
+    private javax.swing.JMenuItem jMenuItemSolicitantes;
+    private javax.swing.JMenuItem jMenuItemUsuarios;
     private javax.swing.JMenu jMenuSair;
     private javax.swing.JMenu jMenuSobre;
     private javax.swing.JMenu jMenuUsuario;

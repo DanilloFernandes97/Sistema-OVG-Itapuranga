@@ -7,9 +7,17 @@ package Formulários;
 
 import DAO.ProdutoDAO;
 import bean.Produto;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashSet;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -17,15 +25,31 @@ import javax.swing.JOptionPane;
  */
 public class JFrameCadProduto extends javax.swing.JDialog {
 
-     private int id = -1;
-    
+    private int id = -1;
+
     /**
      * Creates new form JFrameCadProduto
      */
     public JFrameCadProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-      
+
+        this.setAcessibilidade();
+
+        HashSet conj = new HashSet(this.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+        conj.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+        this.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
+
+    }
+
+    public void setAcessibilidade() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     /**
@@ -153,6 +177,9 @@ public class JFrameCadProduto extends javax.swing.JDialog {
             try {
                 if (produtoDAO.salvar(produto)) {
                     JOptionPane.showMessageDialog(null, "Produto salvo com sucesso.");
+                    edtNomePro.setEnabled(false);
+                    edtQuantEntrada.setEnabled(false);
+                    btnSalvar.setEnabled(false);
                 }
             } catch (IOException | ClassNotFoundException | SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao salvar produto. Motivo: " + ex.getMessage());
@@ -173,6 +200,12 @@ public class JFrameCadProduto extends javax.swing.JDialog {
         this.id = -1;
         edtNomePro.setText("");
         edtQuantEntrada.setText("0");
+        
+        edtNomePro.setEnabled(true);
+        edtQuantEntrada.setEnabled(true);
+        btnSalvar.setEnabled(true);
+                
+        edtNomePro.requestFocus();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void edtNomeProKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtNomeProKeyPressed
@@ -222,7 +255,7 @@ public class JFrameCadProduto extends javax.swing.JDialog {
     }
 
     public static boolean getFrameCadProduto(final int id) {
-                        
+
         JFrameCadProduto jFrameCadProduto = new JFrameCadProduto(null, true);
 
         try {
@@ -240,7 +273,7 @@ public class JFrameCadProduto extends javax.swing.JDialog {
 
         return true;
     }
-    
+
     private void carregaObjetos() throws IOException, ClassNotFoundException, SQLException {
 
         if (this.id > 0) {

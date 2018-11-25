@@ -6,12 +6,19 @@
 package Formulários;
 
 import DAO.UsuarioDAO;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import main.Main;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -27,8 +34,31 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
     public JFrameLoginUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        try {
+            jLabelCadastrarNovo.setVisible(! new UsuarioDAO().getExisteUsuarioCadastrado());
+        } catch (IOException ex) {
+            Logger.getLogger(JFrameLoginUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JFrameLoginUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameLoginUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.setAcessibilidade();
+
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+
+    public void setAcessibilidade() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            public void actionPerformed(ActionEvent e) {
+                btnSair.doClick();
+            }
+        });
     }
 
     public static boolean getFrameLoginUsuario() {
@@ -58,6 +88,7 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
         edtSenha = new javax.swing.JPasswordField();
         btnEntrar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        jLabelCadastrarNovo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Autenticação");
@@ -67,6 +98,18 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
         jLabel1.setText("Usuário");
 
         jLabel2.setText("Senha");
+
+        edtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edtUsuarioKeyPressed(evt);
+            }
+        });
+
+        edtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edtSenhaKeyPressed(evt);
+            }
+        });
 
         btnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Entrar png 32x32.png"))); // NOI18N
         btnEntrar.setText("Entrar");
@@ -81,6 +124,14 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
+            }
+        });
+
+        jLabelCadastrarNovo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelCadastrarNovo.setText("Cadastrar Novo - Clique aqui");
+        jLabelCadastrarNovo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelCadastrarNovoMouseClicked(evt);
             }
         });
 
@@ -101,7 +152,8 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSair))
                     .addComponent(edtUsuario)
-                    .addComponent(edtSenha))
+                    .addComponent(edtSenha)
+                    .addComponent(jLabelCadastrarNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -119,6 +171,8 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEntrar)
                     .addComponent(btnSair))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelCadastrarNovo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,7 +191,7 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
             try {
 
                 logou = usuarioDAO.getAutenticacao(edtUsuario.getText().trim(), edtSenha.getText().trim());
-                
+
                 if (logou) {
                     dispose();
                 } else {
@@ -170,8 +224,26 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
     }
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-       System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void edtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtSenhaKeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnEntrar.doClick();
+        }
+
+    }//GEN-LAST:event_edtSenhaKeyPressed
+
+    private void edtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtUsuarioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            edtSenha.requestFocus();
+        }
+    }//GEN-LAST:event_edtUsuarioKeyPressed
+
+    private void jLabelCadastrarNovoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelCadastrarNovoMouseClicked
+        JFrameCadUsuario.getFrameCadUsuario(-1);
+    }//GEN-LAST:event_jLabelCadastrarNovoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -224,5 +296,6 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelCadastrarNovo;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,12 +7,17 @@ package Formulários;
 
 import DAO.SolicitanteDAO;
 import bean.Solicitante;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,7 +32,19 @@ public class JFrameConsSolicitante extends javax.swing.JDialog {
     public JFrameConsSolicitante(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setAcessibilidade();
         btnConsultar.doClick();
+        edtCons.requestFocus();
+    }
+
+    public void setAcessibilidade() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     public static boolean getFrameConsSolicitante() {

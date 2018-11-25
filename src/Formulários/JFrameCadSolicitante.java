@@ -12,13 +12,18 @@ import DAO.SolicitanteDAO;
 import bean.DespesasFamiliares;
 import bean.Endereco;
 import bean.Solicitante;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashSet;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -32,7 +37,24 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     public JFrameCadSolicitante(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setAcessibilidade();
+        
+        // Navega com enter ---------------------------------------------------------------------------------
+        HashSet conj = new HashSet(jTabbedPane1.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+        conj.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
+        jTabbedPane1.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
+        // --------------------------------------------------------------------------------------------------
 
+    }
+
+    public void setAcessibilidade() {
+        JRootPane meurootpane = getRootPane();
+        meurootpane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "ESCAPE");
+        meurootpane.getRootPane().getActionMap().put("ESCAPE", new AbstractAction("ESCAPE") {
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
     }
 
     /**
@@ -1152,7 +1174,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             edtLogadouro.requestFocus();
             return false;
         }
-        
+
         if (edtCodigoMunicipio.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo Cidade/Município é obrigatório e não foi preenchido.");
             edtCodigoMunicipio.requestFocus();
@@ -1184,7 +1206,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         try {
 
             endereco.setIdmunicipio(new MunicipioDAO().getId(Integer.parseInt(edtCodigoMunicipio.getText().trim())));
-            
+
             return enderecoDAO.salvar(endereco);
         } catch (ClassNotFoundException | SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar endereço. Motivo: " + e.getMessage());
@@ -1402,8 +1424,8 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                     edtNumero.setText(String.valueOf(endereco.getNumero()));
                     edtBairro.setText(String.valueOf(endereco.getBairro()));
                     edtCep.setText(String.valueOf(endereco.getCep()));
-                    edtComplemento.setText(String.valueOf(endereco.getComplemento()));                    
-                    edtCodigoMunicipio.setText(String.valueOf(new MunicipioDAO().getCodigoIbge(endereco.getIdmunicipio())));                                        
+                    edtComplemento.setText(String.valueOf(endereco.getComplemento()));
+                    edtCodigoMunicipio.setText(String.valueOf(new MunicipioDAO().getCodigoIbge(endereco.getIdmunicipio())));
                 }
 
             } catch (IOException | ClassNotFoundException | SQLException ex) {
@@ -1418,9 +1440,13 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         JFrameCadSolicitante jFrameCadSolicitante = new JFrameCadSolicitante(null, true);
 
         jFrameCadSolicitante.idSolicitante = pID;
-        jFrameCadSolicitante.carregaObjetosSolicitante();
-        jFrameCadSolicitante.carregaObjetosEndereco();
-        jFrameCadSolicitante.carregaObjetosDespesasFamiliares();              
+
+        if (pID > 0) {
+            jFrameCadSolicitante.carregaObjetosSolicitante();
+            jFrameCadSolicitante.carregaObjetosEndereco();
+            jFrameCadSolicitante.carregaObjetosDespesasFamiliares();
+        }
+
         jFrameCadSolicitante.setLocationRelativeTo(null);
         jFrameCadSolicitante.setVisible(true);
 
