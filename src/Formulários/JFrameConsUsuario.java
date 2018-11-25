@@ -177,6 +177,7 @@ public class JFrameConsUsuario extends javax.swing.JFrame {
             }
         });
 
+        btnConsultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Consulta 16x16.png"))); // NOI18N
         btnConsultar.setText("Consultar");
         btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

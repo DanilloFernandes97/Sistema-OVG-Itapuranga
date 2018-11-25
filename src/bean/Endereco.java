@@ -8,25 +8,25 @@ public class Endereco {
     private String complemento;
     private String numero;
     private String cep;
-    private int id_municipio;
-   
+    private int idMunicipio;
+    private int idSolicitante;
+
     public int getId() {
         return id;
     }
 
-   
     public void setId(int id) {
         this.id = id;
     }
-   
+
     public String getLogadouro() {
         return logadouro;
     }
-    
+
     public void setLogadouro(String logadouro) {
         this.logadouro = logadouro;
     }
-    
+
     public String getBairro() {
         return bairro;
     }
@@ -59,13 +59,20 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public int getId_municipio() {
-        return id_municipio;
+    public int getIdmunicipio() {
+        return idMunicipio;
     }
 
-    public void setId_municipio(int id_municipio) {
-        this.id_municipio = id_municipio;
+    public void setIdmunicipio(int id_municipio) {
+        this.idMunicipio = id_municipio;
     }
-    
-    
+
+    public int getIdSolicitante() {
+        return idSolicitante;
+    }
+
+    public void setIdSolicitante(int idSolicitante) {
+        this.idSolicitante = idSolicitante;
+    }
+
 }

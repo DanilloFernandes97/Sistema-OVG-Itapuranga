@@ -3,16 +3,15 @@ package bean;
 import java.sql.Date;
 
 public class Solicitante {
-    
+
     private int Id = -1;
     private String Nome = null;
     private String Rg = null;
     private String Cpf = null;
     private String NomePai = null;
     private String NomeMae = null;
-    private int IdEndereco = -1;
     private Date DataNascimento = null;
-    private String Sexo = null; 
+    private String Sexo = null;
     private String Naturalidade = null;
     private String EstadoCivil = null;
     private String HistoricoSocial = null;
@@ -65,14 +64,6 @@ public class Solicitante {
         this.NomeMae = nome_mae;
     }
 
-    public int getIdEndereco() {
-        return IdEndereco;
-    }
-
-    public void setIdEndereco(int id_endereco) {
-        this.IdEndereco = id_endereco;
-    }
-
     public Date getDataNascimento() {
         return DataNascimento;
     }
@@ -112,7 +103,5 @@ public class Solicitante {
     public void setHistoricoSocial(String historico_social) {
         this.HistoricoSocial = historico_social;
     }
-    
-    
-    
+
 }

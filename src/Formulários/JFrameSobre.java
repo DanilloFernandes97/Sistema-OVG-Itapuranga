@@ -14,8 +14,9 @@ public class JFrameSobre extends javax.swing.JFrame {
     /**
      * Creates new form JFrameSobre
      */
-    public JFrameSobre() {
+    public JFrameSobre() {        
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

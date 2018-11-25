@@ -23,6 +23,7 @@ public class EnderecoDAO implements InterfacePersistencia<Endereco> {
 
                 sql = "INSERT INTO endereco(";
                 sql = sql + " id,";
+                sql = sql + " id_solicitante,";
                 sql = sql + " logadouro,";
                 sql = sql + " bairro,";
                 sql = sql + " complemento,";
@@ -36,6 +37,7 @@ public class EnderecoDAO implements InterfacePersistencia<Endereco> {
                 sql = sql + " ?,";
                 sql = sql + " ?,";
                 sql = sql + " ?,";
+                sql = sql + " ?,";
                 sql = sql + " ?";
                 sql = sql + ")";
 
@@ -43,6 +45,7 @@ public class EnderecoDAO implements InterfacePersistencia<Endereco> {
 
                 sql = "UPDATE endereco SET";
                 sql = sql + " id = ?,";
+                sql = sql + " id_solicitante = ?,";
                 sql = sql + " logadouro = ?,";
                 sql = sql + " bairro = ?,";
                 sql = sql + " complemento = ?,";
@@ -57,13 +60,13 @@ public class EnderecoDAO implements InterfacePersistencia<Endereco> {
             persistencia.getPreparedStatement(sql);
 
             persistencia.setParametro(1, pObjeto.getId());
-            persistencia.setParametro(2, pObjeto.getLogadouro());
-            persistencia.setParametro(3, pObjeto.getLogadouro());
+            persistencia.setParametro(2, pObjeto.getIdSolicitante());
+            persistencia.setParametro(3, pObjeto.getLogadouro());           
             persistencia.setParametro(4, pObjeto.getBairro());
             persistencia.setParametro(5, pObjeto.getComplemento());
             persistencia.setParametro(6, pObjeto.getNumero());
-            persistencia.setParametro(8, pObjeto.getCep());
-            persistencia.setParametro(9, pObjeto.getId_municipio());
+            persistencia.setParametro(7, pObjeto.getCep());
+            persistencia.setParametro(8, pObjeto.getIdmunicipio());
 
             retorno = persistencia.getPreparedStatement(null).executeUpdate() > 0;
 
@@ -140,6 +143,7 @@ public class EnderecoDAO implements InterfacePersistencia<Endereco> {
 
             sql = "SELECT";
             sql = sql + " id,";
+            sql = sql + " id_solicitante,";
             sql = sql + " logadouro,";
             sql = sql + " bairro,";
             sql = sql + " complemento,";
@@ -158,11 +162,13 @@ public class EnderecoDAO implements InterfacePersistencia<Endereco> {
             if (persistencia.getResultSet(null).first()) {
 
                 pObjeto.setId(persistencia.getResultSet(null).getInt("id"));
+                pObjeto.setIdSolicitante(persistencia.getResultSet(null).getInt("id_solicitante"));
                 pObjeto.setBairro(persistencia.getResultSet(null).getString("bairro"));
                 pObjeto.setLogadouro(persistencia.getResultSet(null).getString("logadouro"));
                 pObjeto.setComplemento(persistencia.getResultSet(null).getString("Complemento"));
                 pObjeto.setNumero(persistencia.getResultSet(null).getString("numero"));
                 pObjeto.setCep(persistencia.getResultSet(null).getString("cep"));
+                pObjeto.setIdmunicipio(persistencia.getResultSet(null).getInt("id_municipio"));
 
             }
 
@@ -203,4 +209,37 @@ public class EnderecoDAO implements InterfacePersistencia<Endereco> {
 
     }
 
+    public int getIdEndereco(final int pIDSOLICITANTE) throws ClassNotFoundException, SQLException, IOException {
+        String sql = null;
+        Persistencia persistencia = null;
+
+        try {
+
+            sql = "SELECT";
+            sql += "  id";
+            sql += " FROM endereco";
+            sql += " WHERE id_solicitante = ?";
+
+            persistencia = new Persistencia();
+
+            persistencia.getPreparedStatement(sql);
+
+            persistencia.setParametro(1, pIDSOLICITANTE);
+
+            if (persistencia.getResultSet(null).first()) {
+
+                return persistencia.getResultSet(null).getInt("id");
+
+            } else {
+
+                return -1;
+
+            }
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
+
+    }
 }

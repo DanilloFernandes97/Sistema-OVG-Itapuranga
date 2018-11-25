@@ -6,11 +6,18 @@
 package Formulários;
 
 import DAO.DespesasFamiliaresDAO;
+import DAO.EnderecoDAO;
+import DAO.MunicipioDAO;
 import DAO.SolicitanteDAO;
 import bean.DespesasFamiliares;
 import bean.Endereco;
 import bean.Solicitante;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,7 +45,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelDadosGerais = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -60,7 +67,25 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         edtNomeMae = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelEndereco = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        edtLogadouro = new javax.swing.JTextField();
+        edtBairro = new javax.swing.JTextField();
+        edtNomeMunicpio = new javax.swing.JTextField();
+        edtCep = new javax.swing.JFormattedTextField();
+        jFormattedTextField4 = new javax.swing.JFormattedTextField();
+        edtNumero = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        edtComplemento = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        edtCodigoMunicipio = new javax.swing.JTextField();
+        btnConsMunicipio = new javax.swing.JButton();
+        jPanelComposicaoFamiliar = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
@@ -76,7 +101,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelDespesasFamiliares = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         edtValorMoradia = new javax.swing.JFormattedTextField();
@@ -99,22 +124,6 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jPanel6 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         edtValorTotal = new javax.swing.JFormattedTextField();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        edtLogadouro = new javax.swing.JTextField();
-        edtBairro = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        edtCep = new javax.swing.JFormattedTextField();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
-        edtNumero = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel32 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
@@ -164,46 +173,46 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelDadosGeraisLayout = new javax.swing.GroupLayout(jPanelDadosGerais);
+        jPanelDadosGerais.setLayout(jPanelDadosGeraisLayout);
+        jPanelDadosGeraisLayout.setHorizontalGroup(
+            jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDadosGeraisLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel9)
                     .addComponent(jLabel8)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelDadosGeraisLayout.createSequentialGroup()
+                        .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
                             .addComponent(edtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ComboboxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(140, 140, 140))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanelDadosGeraisLayout.createSequentialGroup()
+                        .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(edtNomePai, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelDadosGeraisLayout.createSequentialGroup()
+                                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(edtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10)
                                     .addComponent(edtNomeMae, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelDadosGeraisLayout.createSequentialGroup()
+                                    .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(edtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel5))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jLabel6)
                                         .addComponent(edtNaturalidade)
                                         .addComponent(jLabel2)
@@ -211,41 +220,41 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                     .addComponent(jScrollPane1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelDadosGeraisLayout.setVerticalGroup(
+            jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDadosGeraisLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelDadosGeraisLayout.createSequentialGroup()
+                        .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(jLabel1))
                         .addGap(26, 26, 26))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDadosGeraisLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(edtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ComboboxEstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ComboboxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtNaturalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(edtNomePai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(edtNomeMae, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -255,7 +264,146 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 .addGap(40, 40, 40))
         );
 
-        jTabbedPane1.addTab("Dados Gerias", jPanel1);
+        jTabbedPane1.addTab("Dados Gerias", jPanelDadosGerais);
+
+        jLabel25.setText("Logadouro");
+
+        jLabel26.setText("Bairro / Setor");
+
+        jLabel27.setText("Cidade / Municipio");
+
+        jLabel28.setText("Cep");
+
+        jLabel29.setText("Telefone");
+
+        jLabel30.setText("Nº");
+
+        edtNomeMunicpio.setEnabled(false);
+
+        try {
+            edtCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##### - ###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) 9 #### - ####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/limpar.png"))); // NOI18N
+        jButton4.setText("Limpar");
+
+        jLabel32.setText("Complemento");
+
+        edtCodigoMunicipio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                edtCodigoMunicipioFocusLost(evt);
+            }
+        });
+        edtCodigoMunicipio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edtCodigoMunicipioKeyPressed(evt);
+            }
+        });
+
+        btnConsMunicipio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Consulta 16x16.png"))); // NOI18N
+        btnConsMunicipio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsMunicipioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelEnderecoLayout = new javax.swing.GroupLayout(jPanelEndereco);
+        jPanelEndereco.setLayout(jPanelEnderecoLayout);
+        jPanelEnderecoLayout.setHorizontalGroup(
+            jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                        .addComponent(jLabel32)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                        .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(edtComplemento)
+                            .addComponent(edtBairro, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(edtLogadouro, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(edtCodigoMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnConsMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(edtNomeMunicpio, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelEnderecoLayout.createSequentialGroup()
+                                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel27)
+                                    .addComponent(jLabel25)
+                                    .addComponent(jLabel26))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnderecoLayout.createSequentialGroup()
+                                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel28)
+                                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(edtNumero, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jFormattedTextField4)
+                                        .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(59, 59, 59))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnderecoLayout.createSequentialGroup()
+                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
+        );
+        jPanelEnderecoLayout.setVerticalGroup(
+            jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtLogadouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel29))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                        .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnConsMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(jPanelEnderecoLayout.createSequentialGroup()
+                                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(edtNomeMunicpio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18))
+                    .addComponent(edtCodigoMunicipio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(edtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56))
+        );
+
+        jTabbedPane1.addTab("Endereço", jPanelEndereco);
 
         jLabel17.setText("Nome");
 
@@ -321,70 +469,70 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Alterar png 16x16.png"))); // NOI18N
         jButton3.setText("Alterar");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelComposicaoFamiliarLayout = new javax.swing.GroupLayout(jPanelComposicaoFamiliar);
+        jPanelComposicaoFamiliar.setLayout(jPanelComposicaoFamiliarLayout);
+        jPanelComposicaoFamiliarLayout.setHorizontalGroup(
+            jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
+                        .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel23)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
+                                .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel24)
                                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelComposicaoFamiliarLayout.createSequentialGroup()
+                        .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
                                 .addComponent(jButton1)
                                 .addGap(130, 130, 130)
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
                                 .addComponent(jLabel17)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel21)
                                 .addGap(81, 81, 81)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel22))))
                         .addGap(16, 16, 16))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanelComposicaoFamiliarLayout.setVerticalGroup(
+            jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(jLabel21)
                     .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(jLabel24))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
@@ -393,7 +541,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Composição Familiar", jPanel2);
+        jTabbedPane1.addTab("Composição Familiar", jPanelComposicaoFamiliar);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -594,131 +742,30 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 .addGap(15, 15, 15))
         );
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelDespesasFamiliaresLayout = new javax.swing.GroupLayout(jPanelDespesasFamiliares);
+        jPanelDespesasFamiliares.setLayout(jPanelDespesasFamiliaresLayout);
+        jPanelDespesasFamiliaresLayout.setHorizontalGroup(
+            jPanelDespesasFamiliaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDespesasFamiliaresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelDespesasFamiliaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDespesasFamiliaresLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanelDespesasFamiliaresLayout.setVerticalGroup(
+            jPanelDespesasFamiliaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDespesasFamiliaresLayout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 17, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Despesas familiares", jPanel3);
-
-        jLabel25.setText("Rua / Avenida");
-
-        jLabel26.setText("Bairro / Setor");
-
-        jLabel27.setText("Cidade / Municipio");
-
-        jLabel28.setText("Cep");
-
-        jLabel29.setText("Telefone");
-
-        jLabel30.setText("Nº");
-
-        try {
-            edtCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##### - ###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) 9 #### - ####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/limpar.png"))); // NOI18N
-        jButton4.setText("Limpar");
-
-        jLabel32.setText("Complemento");
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(edtBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
-                            .addComponent(jLabel27)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel25)
-                            .addComponent(jLabel26)
-                            .addComponent(edtLogadouro))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel28)
-                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(edtNumero, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jFormattedTextField4)
-                                .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(59, 59, 59))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jTextField6)
-                        .addGap(90, 90, 90)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel32)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel25)
-                    .addComponent(jLabel30))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtLogadouro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26)
-                    .addComponent(jLabel29))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel27)
-                    .addComponent(jLabel28))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel32)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
-        );
-
-        jTabbedPane1.addTab("Endereço", jPanel4);
+        jTabbedPane1.addTab("Despesas familiares", jPanelDespesasFamiliares);
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Salva.png"))); // NOI18N
         btnSalvar.setText("Salvar - F6");
@@ -751,7 +798,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102)
+                .addGap(100, 100, 100)
                 .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSair)
@@ -783,13 +830,17 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
             if (this.salvarSolicitante()) {
 
-                if (this.salvarComposicaoFamiliar()) {
+                if (this.salvarEndereco()) {
 
-                    if (this.salvarDespesasFamiliares()) {
-                        JOptionPane.showMessageDialog(null, "Solicitante Salvo com sucesso.");
+                    if (this.salvarComposicaoFamiliar()) {
+
+                        if (this.salvarDespesasFamiliares()) {
+                            JOptionPane.showMessageDialog(null, "Solicitante Salvo com sucesso.");
+                        }
+
                     }
-
                 }
+
             }
 
         }
@@ -888,6 +939,44 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         edtValorMoradia.selectAll();
     }//GEN-LAST:event_edtValorMoradiaFocusGained
 
+    private void btnConsMunicipioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsMunicipioActionPerformed
+        int id = JFrameConsMunicipio.getFrameConsMunicipio();
+
+        if (id > 0) {
+            edtCodigoMunicipio.setText(String.valueOf(id));
+        }
+    }//GEN-LAST:event_btnConsMunicipioActionPerformed
+
+    private void edtCodigoMunicipioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_edtCodigoMunicipioFocusLost
+        if (!edtCodigoMunicipio.getText().trim().isEmpty()) {
+            try {
+                String nome = new MunicipioDAO().getNome(Integer.parseInt(edtCodigoMunicipio.getText().trim()));
+                if (!"-1".equals(nome.trim())) {
+                    edtNomeMunicpio.setText(nome);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Município não existente.");
+                    edtNomeMunicpio.setText("");
+                }
+            } catch (ClassNotFoundException | SQLException | IOException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao consultar informações do município. Motivo: " + e.getMessage());
+            }
+        } else {
+            edtNomeMunicpio.setText("");
+        }
+
+
+    }//GEN-LAST:event_edtCodigoMunicipioFocusLost
+
+    private void edtCodigoMunicipioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCodigoMunicipioKeyPressed
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_F2:
+                btnConsMunicipio.doClick();
+                break;
+            default:
+                break;
+        }
+    }//GEN-LAST:event_edtCodigoMunicipioKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -902,16 +991,24 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameCadSolicitante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameCadSolicitante.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameCadSolicitante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameCadSolicitante.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameCadSolicitante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameCadSolicitante.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameCadSolicitante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameCadSolicitante.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -934,17 +1031,21 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboboxEstadoCivil;
     private javax.swing.JComboBox<String> ComboboxSexo;
+    private javax.swing.JButton btnConsMunicipio;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JTextField edtBairro;
     private javax.swing.JFormattedTextField edtCep;
+    private javax.swing.JTextField edtCodigoMunicipio;
+    private javax.swing.JTextField edtComplemento;
     private javax.swing.JFormattedTextField edtCpf;
     private javax.swing.JFormattedTextField edtDataNascimento;
     private javax.swing.JTextField edtLogadouro;
     private javax.swing.JTextField edtNaturalidade;
     private javax.swing.JTextField edtNome;
     private javax.swing.JTextField edtNomeMae;
+    private javax.swing.JTextField edtNomeMunicpio;
     private javax.swing.JTextField edtNomePai;
     private javax.swing.JTextField edtNumero;
     private javax.swing.JTextField edtRg;
@@ -998,27 +1099,28 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanelComposicaoFamiliar;
+    private javax.swing.JPanel jPanelDadosGerais;
+    private javax.swing.JPanel jPanelDespesasFamiliares;
+    private javax.swing.JPanel jPanelEndereco;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextArea textAreaHistoricoSocial;
     // End of variables declaration//GEN-END:variables
 
     private int idSolicitante = -1;
     private int idDespesasFamilires = -1;
+    private int idEndereco = -1;
 
     private boolean validaCampos() {
+
+        // Solcitante --------------------------------------------------------------------------
         if (edtNome.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo Nome é obrigatório e não foi preenchido.");
             edtNome.requestFocus();
@@ -1036,6 +1138,33 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             edtRg.requestFocus();
             return false;
         }
+        // --------------------------------------------------------------------------------------------
+
+        // Endereco -----------------------------------------------------------------------------------
+        if (edtLogadouro.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo Logadouro é obrigatório e não foi preenchido.");
+            edtLogadouro.requestFocus();
+            return false;
+        }
+
+        if (edtBairro.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo Logadouro é obrigatório e não foi preenchido.");
+            edtLogadouro.requestFocus();
+            return false;
+        }
+        
+        if (edtCodigoMunicipio.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo Cidade/Município é obrigatório e não foi preenchido.");
+            edtCodigoMunicipio.requestFocus();
+            return false;
+        }
+
+        if (edtCep.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo CEP é obrigatório e não foi preenchido.");
+            edtCep.requestFocus();
+            return false;
+        }
+        // --------------------------------------------------------------------------------------------
 
         return true;
     }
@@ -1043,12 +1172,24 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private boolean salvarEndereco() {
         Endereco endereco = new Endereco();
 
+        endereco.setId(this.idEndereco);
+        endereco.setIdSolicitante(this.idSolicitante);
         endereco.setLogadouro(edtLogadouro.getText().trim());
+        endereco.setNumero(edtNumero.getText().trim());
         endereco.setBairro(edtBairro.getText().trim());
         endereco.setCep(edtCep.getText().trim());
-        // endereco.set
+        endereco.setComplemento(edtComplemento.getText().trim());
 
-        return true;
+        EnderecoDAO enderecoDAO = new EnderecoDAO();
+        try {
+
+            endereco.setIdmunicipio(new MunicipioDAO().getId(Integer.parseInt(edtCodigoMunicipio.getText().trim())));
+            
+            return enderecoDAO.salvar(endereco);
+        } catch (ClassNotFoundException | SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar endereço. Motivo: " + e.getMessage());
+            return false;
+        }
     }
 
     private boolean salvarSolicitante() {
@@ -1069,8 +1210,15 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         SolicitanteDAO solicitanteDAO = new SolicitanteDAO();
         try {
-            return solicitanteDAO.salvar(solicitante);
-        } catch (Exception e) {
+
+            if (solicitanteDAO.salvar(solicitante)) {
+                this.idSolicitante = solicitante.getId();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (ClassNotFoundException | SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar solicitante. Motivo: " + e.getMessage());
             return false;
         }
@@ -1101,8 +1249,8 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         try {
             return despesasFamiliaresDAO.salvar(despesasFamiliares);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar despesas familiares");
+        } catch (ClassNotFoundException | SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar despesas familiares. Motivo: " + e.getMessage());
             return false;
         }
 
@@ -1231,12 +1379,48 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
     }
 
+    private void carregaObjetosEndereco() {
+        if (idSolicitante > 0) {
+
+            try {
+                this.idEndereco = new EnderecoDAO().getIdEndereco(idSolicitante);
+            } catch (ClassNotFoundException | SQLException | IOException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao retornar dados do solicitante. Motivo: " + ex.getMessage());
+
+            }
+        }
+
+        if (this.idEndereco > 0) {
+            Endereco endereco = new Endereco();
+
+            EnderecoDAO enderecoDAO = new EnderecoDAO();
+            try {
+
+                if (enderecoDAO.getObjeto(this.idEndereco, endereco)) {
+
+                    edtLogadouro.setText(String.valueOf(endereco.getLogadouro()));
+                    edtNumero.setText(String.valueOf(endereco.getNumero()));
+                    edtBairro.setText(String.valueOf(endereco.getBairro()));
+                    edtCep.setText(String.valueOf(endereco.getCep()));
+                    edtComplemento.setText(String.valueOf(endereco.getComplemento()));                    
+                    edtCodigoMunicipio.setText(String.valueOf(new MunicipioDAO().getCodigoIbge(endereco.getIdmunicipio())));                                        
+                }
+
+            } catch (IOException | ClassNotFoundException | SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao retornar dados do endereço. Motivo: " + ex.getMessage());
+
+            }
+        }
+
+    }
+
     public static boolean getFrameCadSolicitantes(final int pID) {
         JFrameCadSolicitante jFrameCadSolicitante = new JFrameCadSolicitante(null, true);
 
         jFrameCadSolicitante.idSolicitante = pID;
         jFrameCadSolicitante.carregaObjetosSolicitante();
-        jFrameCadSolicitante.carregaObjetosDespesasFamiliares();
+        jFrameCadSolicitante.carregaObjetosEndereco();
+        jFrameCadSolicitante.carregaObjetosDespesasFamiliares();              
         jFrameCadSolicitante.setLocationRelativeTo(null);
         jFrameCadSolicitante.setVisible(true);
 

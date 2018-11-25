@@ -29,7 +29,6 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
                 sql = sql + " cpf,";
                 sql = sql + " nome_pai,";
                 sql = sql + " nome_mae,";
-                sql = sql + " id_endereco,";
                 sql = sql + " data_nascimento,";
                 sql = sql + " sexo,";
                 sql = sql + " naturalidade,";
@@ -37,7 +36,6 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
                 sql = sql + " historico_social,";
                 sql = sql + " id";
                 sql = sql + ")VALUES(";
-                sql = sql + " ?,";
                 sql = sql + " ?,";
                 sql = sql + " ?,";
                 sql = sql + " ?,";
@@ -59,9 +57,8 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
                 sql = sql + " cpf = ?,";
                 sql = sql + " nome_pai = ?,";
                 sql = sql + " nome_mae = ?,";
-                sql = sql + " id_endereco = ?,";
                 sql = sql + " data_nascimento = ?,";
-                sql = sql + " sexo = ?,"; // (͡° ͜ʖ ͡°) 
+                sql = sql + " sexo = ?,";
                 sql = sql + " naturalidade = ?,";
                 sql = sql + " estado_civil = ?,";
                 sql = sql + " historico_social = ?";
@@ -76,14 +73,13 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
             persistencia.setParametro(2, pObjeto.getRg());
             persistencia.setParametro(3, pObjeto.getCpf());
             persistencia.setParametro(4, pObjeto.getNomePai());
-            persistencia.setParametro(5, pObjeto.getNomeMae());
-            persistencia.setParametro(6, pObjeto.getIdEndereco());
-            persistencia.setParametro(7, pObjeto.getDataNascimento());
-            persistencia.setParametro(8, pObjeto.getSexo()); // (͡° ͜ʖ ͡°) 
-            persistencia.setParametro(9, pObjeto.getNaturalidade());
-            persistencia.setParametro(10, pObjeto.getEstadoCivil());
-            persistencia.setParametro(11, pObjeto.getHistoricoSocial());
-            persistencia.setParametro(12, pObjeto.getId());
+            persistencia.setParametro(5, pObjeto.getNomeMae());            
+            persistencia.setParametro(6, pObjeto.getDataNascimento());
+            persistencia.setParametro(7, pObjeto.getSexo());
+            persistencia.setParametro(8, pObjeto.getNaturalidade());
+            persistencia.setParametro(9, pObjeto.getEstadoCivil());
+            persistencia.setParametro(10, pObjeto.getHistoricoSocial());
+            persistencia.setParametro(11, pObjeto.getId());
 
             retorno = persistencia.getPreparedStatement(null).executeUpdate() > 0;
 
@@ -161,8 +157,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
             sql = sql + " rg,";
             sql = sql + " cpf,";
             sql = sql + " nome_pai,";
-            sql = sql + " nome_mae,";
-            sql = sql + " id_endereco,";
+            sql = sql + " nome_mae,";            
             sql = sql + " data_nascimento,";
             sql = sql + " sexo,";
             sql = sql + " naturalidade,";
@@ -184,8 +179,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
                 pObjeto.setRg(persistencia.getResultSet(null).getString("rg"));
                 pObjeto.setCpf(persistencia.getResultSet(null).getString("cpf"));
                 pObjeto.setNomePai(persistencia.getResultSet(null).getString("nome_pai"));
-                pObjeto.setNomeMae(persistencia.getResultSet(null).getString("nome_mae"));
-                pObjeto.setIdEndereco(persistencia.getResultSet(null).getInt("id_endereco"));
+                pObjeto.setNomeMae(persistencia.getResultSet(null).getString("nome_mae"));                
                 pObjeto.setDataNascimento(persistencia.getResultSet(null).getDate("data_nascimento"));
                 pObjeto.setSexo(persistencia.getResultSet(null).getString("sexo"));
                 pObjeto.setNaturalidade(persistencia.getResultSet(null).getString("naturalidade"));
@@ -248,8 +242,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
             sql += " rg,";
             sql += " cpf,";
             sql += " nome_pai,";
-            sql += " nome_mae,";
-            sql += " id_endereco,";
+            sql += " nome_mae,";            
             sql += " data_nascimento,";
             sql += " sexo,";
             sql += " naturalidade,";
@@ -286,8 +279,7 @@ public class SolicitanteDAO implements InterfacePersistencia<Solicitante> {
                 solicitante.setRg(persistencia.getResultSet(null).getString("rg"));
                 solicitante.setCpf(persistencia.getResultSet(null).getString("cpf"));
                 solicitante.setNomePai(persistencia.getResultSet(null).getString("nome_pai"));
-                solicitante.setNomeMae(persistencia.getResultSet(null).getString("nome_mae"));
-                solicitante.setIdEndereco(persistencia.getResultSet(null).getInt("id_endereco"));
+                solicitante.setNomeMae(persistencia.getResultSet(null).getString("nome_mae"));                
                 solicitante.setDataNascimento(persistencia.getResultSet(null).getDate("data_nascimento"));
                 solicitante.setSexo(persistencia.getResultSet(null).getString("sexo"));
                 solicitante.setNaturalidade(persistencia.getResultSet(null).getString("naturalidade"));

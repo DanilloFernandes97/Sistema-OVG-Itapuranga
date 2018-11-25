@@ -60,6 +60,11 @@ public class JFrameCadProduto extends javax.swing.JDialog {
                 edtNomeProActionPerformed(evt);
             }
         });
+        edtNomePro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                edtNomeProKeyPressed(evt);
+            }
+        });
 
         jLabel2.setText("Quantidade de entrada");
 
@@ -169,6 +174,10 @@ public class JFrameCadProduto extends javax.swing.JDialog {
         edtNomePro.setText("");
         edtQuantEntrada.setText("0");
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void edtNomeProKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtNomeProKeyPressed
+        edtNomePro.getText().toUpperCase();
+    }//GEN-LAST:event_edtNomeProKeyPressed
 
     /**
      * @param args the command line arguments

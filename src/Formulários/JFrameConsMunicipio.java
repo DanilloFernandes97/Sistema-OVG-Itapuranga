@@ -5,8 +5,8 @@
  */
 package Formulários;
 
-import DAO.ProdutoDAO;
-import bean.Produto;
+import DAO.MunicipioDAO;
+import bean.Municipio;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,15 +19,28 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author João Vínicius
  */
-public class JFrameConsProduto extends javax.swing.JDialog {
+public class JFrameConsMunicipio extends javax.swing.JDialog {
+
+    private boolean clicouOk = false;
+    private int id;
 
     /**
-     * Creates new form JFrameConsProduto
+     * Creates new form JFrameConsMunicipio
      */
-    public JFrameConsProduto(java.awt.Frame parent, boolean modal) {
+    public JFrameConsMunicipio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         btnConsultar.doClick();
+    }
+
+    public static int getFrameConsMunicipio() {
+
+        JFrameConsMunicipio jFrameConsMunicipio = new JFrameConsMunicipio(null, true);
+
+        jFrameConsMunicipio.setLocationRelativeTo(null);
+        jFrameConsMunicipio.setVisible(true);
+
+        return jFrameConsMunicipio.id;
     }
 
     /**
@@ -44,14 +57,11 @@ public class JFrameConsProduto extends javax.swing.JDialog {
         edtCons = new javax.swing.JTextField();
         jScrollPane = new javax.swing.JScrollPane();
         jTable = new javax.swing.JTable();
-        btnAlterar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
-        btnNovo = new javax.swing.JButton();
+        btnOk = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnConsultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Consulta de produtos");
 
         panelConsultarPor.setBorder(javax.swing.BorderFactory.createTitledBorder("Consultar por"));
 
@@ -119,29 +129,12 @@ public class JFrameConsProduto extends javax.swing.JDialog {
         });
         jScrollPane.setViewportView(jTable);
 
-        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Alterar png 16x16.png"))); // NOI18N
-        btnAlterar.setText("Alterar");
-        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+        btnOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Novo png 16x16.png"))); // NOI18N
+        btnOk.setText("Ok");
+        btnOk.setPreferredSize(new java.awt.Dimension(85, 29));
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterarActionPerformed(evt);
-            }
-        });
-
-        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Excluir png 16x16.png"))); // NOI18N
-        btnExcluir.setText("Excluir");
-        btnExcluir.setPreferredSize(new java.awt.Dimension(85, 25));
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
-
-        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Novo png 16x16.png"))); // NOI18N
-        btnNovo.setText("Novo");
-        btnNovo.setPreferredSize(new java.awt.Dimension(85, 29));
-        btnNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoActionPerformed(evt);
+                btnOkActionPerformed(evt);
             }
         });
 
@@ -179,11 +172,7 @@ public class JFrameConsProduto extends javax.swing.JDialog {
                             .addComponent(btnConsultar)
                             .addGap(9, 9, 9)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnOk, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -204,9 +193,7 @@ public class JFrameConsProduto extends javax.swing.JDialog {
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnOk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -229,9 +216,8 @@ public class JFrameConsProduto extends javax.swing.JDialog {
     }//GEN-LAST:event_edtConsKeyPressed
 
     private void jTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMouseClicked
-
         if (evt.getClickCount() == 2) {
-            btnAlterar.doClick();
+            btnOk.doClick();
         }
     }//GEN-LAST:event_jTableMouseClicked
 
@@ -242,53 +228,22 @@ public class JFrameConsProduto extends javax.swing.JDialog {
                 edtCons.requestFocus();
                 break;
             case KeyEvent.VK_ENTER:
-                btnAlterar.doClick();
-                break;
-            case KeyEvent.VK_DELETE:
-                btnExcluir.doClick();
+                btnOk.doClick();
                 break;
             default:
                 break;
         }
-
     }//GEN-LAST:event_jTableKeyPressed
 
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
-        if (JFrameCadProduto.getFrameCadProduto((int) jTable.getValueAt(jTable.getSelectedRow(), 0))) {
-            try {
-                this.readJTable();
-            } catch (ClassNotFoundException | SQLException | IOException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao buscar informações do usuário. Motivo: " + ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_btnAlterarActionPerformed
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
 
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o registro?", "Atenção!", JOptionPane.YES_NO_OPTION) == 0) {
-
-            ProdutoDAO produtoDAO = new ProdutoDAO();
-            try {
-
-                if (produtoDAO.delete((int) jTable.getValueAt(jTable.getSelectedRow(), 0))) {
-                    this.readJTable();
-                }
-            } catch (IOException | ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir usuário. Motivo: " + ex.getMessage());
-            }
-
+        if (jTable.getRowCount() > 0) {
+            this.clicouOk = true;
+            this.setVisible(false);
+            this.id = (int) jTable.getValueAt(jTable.getSelectedRow(), 0);
         }
 
-    }//GEN-LAST:event_btnExcluirActionPerformed
-
-    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        if (JFrameCadProduto.getFrameCadProduto(-1)) {
-            try {
-                this.readJTable();
-            } catch (ClassNotFoundException | SQLException | IOException ex) {
-                JOptionPane.showMessageDialog(null, "Erro ao buscar informações do usuário. Motivo: " + ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_btnNovoActionPerformed
+    }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         dispose();
@@ -319,20 +274,20 @@ public class JFrameConsProduto extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameConsMunicipio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameConsMunicipio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameConsMunicipio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameConsMunicipio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrameConsProduto dialog = new JFrameConsProduto(new javax.swing.JFrame(), true);
+                JFrameConsMunicipio dialog = new JFrameConsMunicipio(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -343,38 +298,10 @@ public class JFrameConsProduto extends javax.swing.JDialog {
             }
         });
     }
-    public void readJTable() throws ClassNotFoundException, SQLException, IOException {
-        DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
-
-        modelo.setNumRows(0);
-
-        ProdutoDAO produtoDAO = new ProdutoDAO();
-
-        for (Produto p : produtoDAO.getConsulta(edtCons.getText(), (byte) comboboxConsultarPor.getSelectedIndex())) {
-
-            modelo.addRow(new Object[]{
-                p.getId(),
-                p.getNome()
-            }
-            );
-        }
-    }
-    
-    public static boolean getFrameConsProduto() {
-
-        JFrameConsProduto jFrameConsProduto = new JFrameConsProduto(null, true);
-
-        jFrameConsProduto.setLocationRelativeTo(null);
-        jFrameConsProduto.setVisible(true);
-
-        return true;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnConsultar;
-    private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnOk;
     private javax.swing.JButton btnSair;
     private javax.swing.JComboBox<String> comboboxConsultarPor;
     private javax.swing.JTextField edtCons;
@@ -382,4 +309,21 @@ public class JFrameConsProduto extends javax.swing.JDialog {
     private javax.swing.JTable jTable;
     private javax.swing.JPanel panelConsultarPor;
     // End of variables declaration//GEN-END:variables
+
+    public void readJTable() throws ClassNotFoundException, SQLException, IOException {
+        DefaultTableModel modelo = (DefaultTableModel) jTable.getModel();
+
+        modelo.setNumRows(0);
+
+        MunicipioDAO municipioDAO = new MunicipioDAO();
+
+        for (Municipio p : municipioDAO.getConsulta(edtCons.getText(), (byte) comboboxConsultarPor.getSelectedIndex())) {
+
+            modelo.addRow(new Object[]{
+                p.getCodigoIbge(),
+                p.getNome()
+            }
+            );
+        }
+    }
 }
