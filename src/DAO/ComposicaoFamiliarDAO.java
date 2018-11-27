@@ -2,8 +2,11 @@ package DAO;
 
 import interface_persistencia.InterfacePersistencia;
 import bean.ComposicaoFamiliar;
+import bean.Solicitante;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import persistencia.Persistencia;
 
 public class ComposicaoFamiliarDAO implements InterfacePersistencia<ComposicaoFamiliar> {
@@ -187,6 +190,8 @@ public class ComposicaoFamiliarDAO implements InterfacePersistencia<ComposicaoFa
 
             sql = "DELETE FROM composicao_familiar WHERE id = ?";
 
+            persistencia = new Persistencia();
+            
             persistencia.getPreparedStatement(sql);
 
             persistencia.getPreparedStatement(null).setInt(1, pID);
@@ -200,6 +205,52 @@ public class ComposicaoFamiliarDAO implements InterfacePersistencia<ComposicaoFa
 
         return retorno;
 
+    }
+
+    public List<ComposicaoFamiliar> getConsulta(final int pIDSOLICITANTE) throws ClassNotFoundException, SQLException, IOException {
+        String sql = null;
+        Persistencia persistencia = null;
+
+        List<ComposicaoFamiliar> lista = new ArrayList<>();
+
+        try {
+
+            sql = "SELECT";
+            sql += " id_solicitante,";
+            sql += " parentesco,";
+            sql += " nome,";
+            sql += " data_nasc,";
+            sql += " profissao,";
+            sql += " renda,";
+            sql += " id";
+            sql += " FROM composicao_familiar";
+            sql += " WHERE id_solicitante = " + pIDSOLICITANTE;
+
+            persistencia = new Persistencia();
+
+            persistencia.getPreparedStatement(sql);
+
+            while (persistencia.getResultSet(sql).next()) {
+                ComposicaoFamiliar composicaoFamiliar = new ComposicaoFamiliar();
+
+                composicaoFamiliar.setId(persistencia.getResultSet(null).getInt("id"));
+                composicaoFamiliar.setIdSolicitante(persistencia.getResultSet(null).getInt("id_solicitante"));
+                composicaoFamiliar.setParentesco(persistencia.getResultSet(null).getString("parentesco"));
+                composicaoFamiliar.setNome(persistencia.getResultSet(null).getString("nome"));
+                composicaoFamiliar.setDataNasc(persistencia.getResultSet(null).getDate("data_nasc"));
+                composicaoFamiliar.setProfissao(persistencia.getResultSet(null).getString("profissao"));
+                composicaoFamiliar.setRenda(persistencia.getResultSet(null).getDouble("renda"));
+
+                lista.add(composicaoFamiliar);
+
+            }
+
+            return lista;
+
+        } finally {
+            sql = null;
+            persistencia = null;
+        }
     }
 
 }

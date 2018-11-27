@@ -5,10 +5,12 @@
  */
 package Formulários;
 
+import DAO.ComposicaoFamiliarDAO;
 import DAO.DespesasFamiliaresDAO;
 import DAO.EnderecoDAO;
 import DAO.MunicipioDAO;
 import DAO.SolicitanteDAO;
+import bean.ComposicaoFamiliar;
 import bean.DespesasFamiliares;
 import bean.Endereco;
 import bean.Solicitante;
@@ -19,11 +21,14 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -38,7 +43,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setAcessibilidade();
-        
+
         // Navega com enter ---------------------------------------------------------------------------------
         HashSet conj = new HashSet(jTabbedPane1.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
         conj.add(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0));
@@ -102,7 +107,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         edtCep = new javax.swing.JFormattedTextField();
         jFormattedTextField4 = new javax.swing.JFormattedTextField();
         edtNumero = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
         edtComplemento = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
         edtCodigoMunicipio = new javax.swing.JTextField();
@@ -113,16 +118,16 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jTextField2 = new javax.swing.JTextField();
+        edtNomeParentesco = new javax.swing.JTextField();
+        ComboboxParentesco = new javax.swing.JComboBox();
+        edtDataNascimentoParentesco = new javax.swing.JFormattedTextField();
+        edtRendaParentesco = new javax.swing.JFormattedTextField();
+        edtProfissaoParentesco = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jTableCompsicaoFamiliar = new javax.swing.JTable();
+        btnAdicionarComposicaoFamiliar = new javax.swing.JButton();
+        btnExcluirComposicaoFamiliar = new javax.swing.JButton();
+        btnAlterarComposicaoFamiliar = new javax.swing.JButton();
         jPanelDespesasFamiliares = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -314,8 +319,13 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/limpar.png"))); // NOI18N
-        jButton4.setText("Limpar");
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/limpar.png"))); // NOI18N
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         jLabel32.setText("Complemento");
 
@@ -379,7 +389,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                                         .addComponent(edtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(59, 59, 59))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEnderecoLayout.createSequentialGroup()
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())))))
         );
         jPanelEnderecoLayout.setVerticalGroup(
@@ -420,7 +430,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 .addComponent(jLabel32)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
+                    .addComponent(btnLimpar)
                     .addComponent(edtComplemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(56, 56, 56))
         );
@@ -437,32 +447,30 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         jLabel24.setText("Renda");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Marido", "Esposa", "Filho", "Filha", "Pai", "Mãe" }));
+        ComboboxParentesco.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Marido", "Esposa", "Filho", "Filha", "Pai", "Mãe" }));
 
         try {
-            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            edtDataNascimentoParentesco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCompsicaoFamiliar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Parentesco", "Profissão", "Dt. de nascimento", "Renda"
+                "Código", "Nome", "Parentesco", "Profissão", "Dt. de nascimento", "Renda"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -473,23 +481,38 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
+        jTableCompsicaoFamiliar.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(jTableCompsicaoFamiliar);
+        if (jTableCompsicaoFamiliar.getColumnModel().getColumnCount() > 0) {
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(0).setHeaderValue("Código");
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(1).setResizable(false);
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(1).setHeaderValue("Nome");
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(2).setResizable(false);
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(2).setHeaderValue("Parentesco");
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(3).setResizable(false);
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(3).setHeaderValue("Profissão");
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(4).setResizable(false);
+            jTableCompsicaoFamiliar.getColumnModel().getColumn(4).setHeaderValue("Dt. de nascimento");
         }
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add.png"))); // NOI18N
-        jButton1.setText("Adicionar");
+        btnAdicionarComposicaoFamiliar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add.png"))); // NOI18N
+        btnAdicionarComposicaoFamiliar.setText("Adicionar");
+        btnAdicionarComposicaoFamiliar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarComposicaoFamiliarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Excluir png 16x16.png"))); // NOI18N
-        jButton2.setText("Excluir");
+        btnExcluirComposicaoFamiliar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Excluir png 16x16.png"))); // NOI18N
+        btnExcluirComposicaoFamiliar.setText("Excluir");
+        btnExcluirComposicaoFamiliar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirComposicaoFamiliarActionPerformed(evt);
+            }
+        });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Alterar png 16x16.png"))); // NOI18N
-        jButton3.setText("Alterar");
+        btnAlterarComposicaoFamiliar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Alterar png 16x16.png"))); // NOI18N
+        btnAlterarComposicaoFamiliar.setText("Alterar");
 
         javax.swing.GroupLayout jPanelComposicaoFamiliarLayout = new javax.swing.GroupLayout(jPanelComposicaoFamiliar);
         jPanelComposicaoFamiliar.setLayout(jPanelComposicaoFamiliarLayout);
@@ -500,35 +523,35 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                 .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
                         .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edtNomeParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel23)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(edtProfissaoParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ComboboxParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
                                 .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel24)
-                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(edtRendaParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelComposicaoFamiliarLayout.createSequentialGroup()
                         .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(130, 130, 130)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAdicionarComposicaoFamiliar)
+                                .addGap(112, 112, 112)
+                                .addComponent(btnAlterarComposicaoFamiliar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2))
+                                .addComponent(btnExcluirComposicaoFamiliar))
                             .addGroup(jPanelComposicaoFamiliarLayout.createSequentialGroup()
                                 .addComponent(jLabel17)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel21)
                                 .addGap(81, 81, 81)
                                 .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(edtDataNascimentoParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel22))))
                         .addGap(16, 16, 16))))
         );
@@ -542,22 +565,22 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                     .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtNomeParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboboxParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtDataNascimentoParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23)
                     .addComponent(jLabel24))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtProfissaoParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtRendaParentesco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(jPanelComposicaoFamiliarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                    .addComponent(btnAdicionarComposicaoFamiliar)
+                    .addComponent(btnExcluirComposicaoFamiliar)
+                    .addComponent(btnAlterarComposicaoFamiliar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -999,6 +1022,85 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_edtCodigoMunicipioKeyPressed
 
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        edtLogadouro.setText("");
+        edtNumero.setText("");
+        edtBairro.setText("");
+        edtCodigoMunicipio.setText("");
+        edtNomeMunicpio.setText("");
+        edtCep.setText("");
+        edtComplemento.setText("");
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnExcluirComposicaoFamiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirComposicaoFamiliarActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o registro?", "Atenção!", JOptionPane.YES_NO_OPTION) == 0) {
+
+            ComposicaoFamiliarDAO composicaoFamiliarDAO = new ComposicaoFamiliarDAO();
+            try {
+
+                if (composicaoFamiliarDAO.delete((int) jTableCompsicaoFamiliar.getValueAt(jTableCompsicaoFamiliar.getSelectedRow(), 0))) {
+                    this.readJTable();
+                }
+            } catch (IOException | ClassNotFoundException | SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir composição familiar. Motivo: " + ex.getMessage());
+            }
+
+        }
+    }//GEN-LAST:event_btnExcluirComposicaoFamiliarActionPerformed
+
+    public void readJTable(){
+        DefaultTableModel modelo = (DefaultTableModel) jTableCompsicaoFamiliar.getModel();
+
+        modelo.setNumRows(0);
+
+        ComposicaoFamiliarDAO composicaoFamiliarDAO = new ComposicaoFamiliarDAO();
+
+        try {
+            for (ComposicaoFamiliar c : composicaoFamiliarDAO.getConsulta(this.idSolicitante)){
+                
+                modelo.addRow(new Object[]{
+                    c.getId(),
+                    c.getNome(),
+                    c.getParentesco(),
+                    c.getProfissao(),
+                    this.formataDataBrasileira(c.getDataNasc().toString()),
+                    c.getRenda()
+                        
+                }
+                );
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JFrameCadSolicitante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameCadSolicitante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(JFrameCadSolicitante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    private void btnAdicionarComposicaoFamiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarComposicaoFamiliarActionPerformed
+
+        ComposicaoFamiliar composicaoFamiliar = new ComposicaoFamiliar();
+        composicaoFamiliar.setId(-1);
+        composicaoFamiliar.setIdSolicitante(this.idSolicitante);
+        composicaoFamiliar.setNome(edtNomeParentesco.getText());
+        composicaoFamiliar.setDataNasc(formataDataAmericana(edtDataNascimentoParentesco.getText()));
+        composicaoFamiliar.setParentesco((String) ComboboxParentesco.getItemAt(ComboboxParentesco.getSelectedIndex()));
+        composicaoFamiliar.setProfissao(edtProfissaoParentesco.getText());
+        composicaoFamiliar.setRenda(Double.parseDouble(edtRendaParentesco.getText()));
+
+        ComposicaoFamiliarDAO composicaoFamiliarDAO = new ComposicaoFamiliarDAO();
+
+        try {
+            if (composicaoFamiliarDAO.salvar(composicaoFamiliar)){
+                this.readJTable();
+            }
+        } catch (ClassNotFoundException | SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao salvar composição familiar. Motivo: " + e.getMessage());
+        }
+    }//GEN-LAST:event_btnAdicionarComposicaoFamiliarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1052,8 +1154,13 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboboxEstadoCivil;
+    private javax.swing.JComboBox ComboboxParentesco;
     private javax.swing.JComboBox<String> ComboboxSexo;
+    private javax.swing.JButton btnAdicionarComposicaoFamiliar;
+    private javax.swing.JButton btnAlterarComposicaoFamiliar;
     private javax.swing.JButton btnConsMunicipio;
+    private javax.swing.JButton btnExcluirComposicaoFamiliar;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
@@ -1063,13 +1170,17 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private javax.swing.JTextField edtComplemento;
     private javax.swing.JFormattedTextField edtCpf;
     private javax.swing.JFormattedTextField edtDataNascimento;
+    private javax.swing.JFormattedTextField edtDataNascimentoParentesco;
     private javax.swing.JTextField edtLogadouro;
     private javax.swing.JTextField edtNaturalidade;
     private javax.swing.JTextField edtNome;
     private javax.swing.JTextField edtNomeMae;
     private javax.swing.JTextField edtNomeMunicpio;
     private javax.swing.JTextField edtNomePai;
+    private javax.swing.JTextField edtNomeParentesco;
     private javax.swing.JTextField edtNumero;
+    private javax.swing.JTextField edtProfissaoParentesco;
+    private javax.swing.JFormattedTextField edtRendaParentesco;
     private javax.swing.JTextField edtRg;
     private javax.swing.JFormattedTextField edtValorAgua;
     private javax.swing.JFormattedTextField edtValorAlimentacao;
@@ -1081,13 +1192,6 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField edtValorOutros;
     private javax.swing.JFormattedTextField edtValorTelefone;
     private javax.swing.JFormattedTextField edtValorTotal;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JFormattedTextField jFormattedTextField4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1130,9 +1234,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTableCompsicaoFamiliar;
     private javax.swing.JTextArea textAreaHistoricoSocial;
     // End of variables declaration//GEN-END:variables
 
@@ -1445,6 +1547,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             jFrameCadSolicitante.carregaObjetosSolicitante();
             jFrameCadSolicitante.carregaObjetosEndereco();
             jFrameCadSolicitante.carregaObjetosDespesasFamiliares();
+            jFrameCadSolicitante.readJTable();
         }
 
         jFrameCadSolicitante.setLocationRelativeTo(null);
