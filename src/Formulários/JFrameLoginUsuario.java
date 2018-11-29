@@ -92,6 +92,8 @@ public class JFrameLoginUsuario extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Autenticação");
+        setUndecorated(true);
+        setResizable(false);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Login 96x96.png"))); // NOI18N
 
