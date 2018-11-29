@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
@@ -513,6 +514,11 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
 
         btnAlterarComposicaoFamiliar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Alterar png 16x16.png"))); // NOI18N
         btnAlterarComposicaoFamiliar.setText("Alterar");
+        btnAlterarComposicaoFamiliar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarComposicaoFamiliarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelComposicaoFamiliarLayout = new javax.swing.GroupLayout(jPanelComposicaoFamiliar);
         jPanelComposicaoFamiliar.setLayout(jPanelComposicaoFamiliarLayout);
@@ -1048,7 +1054,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnExcluirComposicaoFamiliarActionPerformed
 
-    public void readJTable(){
+    public void readJTable() {
         DefaultTableModel modelo = (DefaultTableModel) jTableCompsicaoFamiliar.getModel();
 
         modelo.setNumRows(0);
@@ -1056,8 +1062,8 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         ComposicaoFamiliarDAO composicaoFamiliarDAO = new ComposicaoFamiliarDAO();
 
         try {
-            for (ComposicaoFamiliar c : composicaoFamiliarDAO.getConsulta(this.idSolicitante)){
-                
+            for (ComposicaoFamiliar c : composicaoFamiliarDAO.getConsulta(this.idSolicitante)) {
+
                 modelo.addRow(new Object[]{
                     c.getId(),
                     c.getNome(),
@@ -1065,7 +1071,7 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
                     c.getProfissao(),
                     this.formataDataBrasileira(c.getDataNasc().toString()),
                     c.getRenda()
-                        
+
                 }
                 );
             }
@@ -1077,10 +1083,12 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
             Logger.getLogger(JFrameCadSolicitante.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
+
     private void btnAdicionarComposicaoFamiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarComposicaoFamiliarActionPerformed
 
+        this.validaCamposComposicacaoFamiliar();
+        
         ComposicaoFamiliar composicaoFamiliar = new ComposicaoFamiliar();
         composicaoFamiliar.setId(-1);
         composicaoFamiliar.setIdSolicitante(this.idSolicitante);
@@ -1093,13 +1101,44 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         ComposicaoFamiliarDAO composicaoFamiliarDAO = new ComposicaoFamiliarDAO();
 
         try {
-            if (composicaoFamiliarDAO.salvar(composicaoFamiliar)){
+            if (composicaoFamiliarDAO.salvar(composicaoFamiliar)) {
                 this.readJTable();
             }
         } catch (ClassNotFoundException | SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar composição familiar. Motivo: " + e.getMessage());
         }
     }//GEN-LAST:event_btnAdicionarComposicaoFamiliarActionPerformed
+
+    private void btnAlterarComposicaoFamiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarComposicaoFamiliarActionPerformed
+        this.idComposicaoFamiliar = (int) jTableCompsicaoFamiliar.getValueAt(jTableCompsicaoFamiliar.getSelectedRow(), 0);
+
+        ComposicaoFamiliar composicaoFamiliar = new ComposicaoFamiliar();
+
+        ComposicaoFamiliarDAO composicaoFamiliarDAO = new ComposicaoFamiliarDAO();
+
+        try {
+
+            if (composicaoFamiliarDAO.getObjeto(this.idComposicaoFamiliar, composicaoFamiliar)) {
+
+                composicaoFamiliar.setId(this.idComposicaoFamiliar);
+                composicaoFamiliar.setIdSolicitante(this.idSolicitante);
+
+                edtNomeParentesco.setText(composicaoFamiliar.getNome());
+                //composicaoFamiliar.setDataNasc(formataDataAmericana(edtDataNascimentoParentesco.getText()));
+                //composicaoFamiliar.setParentesco((String) ComboboxParentesco.getItemAt(ComboboxParentesco.getSelectedIndex()));
+                edtProfissaoParentesco.setText(composicaoFamiliar.getProfissao());
+                edtRendaParentesco.setText(String.valueOf(composicaoFamiliar.getRenda()));
+
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(JFrameCadSolicitante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(JFrameCadSolicitante.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(JFrameCadSolicitante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnAlterarComposicaoFamiliarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1241,24 +1280,57 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
     private int idSolicitante = -1;
     private int idDespesasFamilires = -1;
     private int idEndereco = -1;
+    private int idComposicaoFamiliar = -1;
+
+    private boolean validaCamposComposicacaoFamiliar() {
+        if (edtNomeParentesco.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo Nome é obrigatorio e não foi preenchido.");
+            edtNomeParentesco.requestFocus();            
+            return false;
+        }
+        
+        if (edtDataNascimentoParentesco.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo data de nascimento obrigatorio e não foi preenchido.");
+            edtDataNascimentoParentesco.requestFocus();
+            return false;
+        }
+        
+        if (edtRendaParentesco.getText().trim().isEmpty()){            
+            JOptionPane.showMessageDialog(null, "Campo data de nascimento obrigatorio e não foi preenchido.");
+            edtNomeParentesco.requestFocus();
+            return false;
+        }
+        
+        if (Double.parseDouble(edtRendaParentesco.getText().trim()) == 0){            
+            JOptionPane.showMessageDialog(null, "Campo renda obrigatório e não foi preenchido.");
+            edtRendaParentesco.requestFocus();
+            return false;
+        }
+        
+        
+        return true;
+    }
 
     private boolean validaCampos() {
 
         // Solcitante --------------------------------------------------------------------------
         if (edtNome.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo Nome é obrigatório e não foi preenchido.");
+            jTabbedPane1.setSelectedIndex(0);
             edtNome.requestFocus();
             return false;
         }
 
         if (edtCpf.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo CPF é obrigatório e não foi preenchido.");
+            jTabbedPane1.setSelectedIndex(0);
             edtCpf.requestFocus();
             return false;
         }
 
         if (edtRg.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo RG é obrigatório e não foi preenchido.");
+            jTabbedPane1.setSelectedIndex(0);
             edtRg.requestFocus();
             return false;
         }
@@ -1267,24 +1339,28 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         // Endereco -----------------------------------------------------------------------------------
         if (edtLogadouro.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo Logadouro é obrigatório e não foi preenchido.");
+            jTabbedPane1.setSelectedIndex(1);
             edtLogadouro.requestFocus();
             return false;
         }
 
         if (edtBairro.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo Logadouro é obrigatório e não foi preenchido.");
+            jTabbedPane1.setSelectedIndex(1);
             edtLogadouro.requestFocus();
             return false;
         }
 
         if (edtCodigoMunicipio.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo Cidade/Município é obrigatório e não foi preenchido.");
+            jTabbedPane1.setSelectedIndex(1);
             edtCodigoMunicipio.requestFocus();
             return false;
         }
 
         if (edtCep.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Campo CEP é obrigatório e não foi preenchido.");
+            jTabbedPane1.setSelectedIndex(1);
             edtCep.requestFocus();
             return false;
         }
@@ -1542,12 +1618,12 @@ public class JFrameCadSolicitante extends javax.swing.JDialog {
         JFrameCadSolicitante jFrameCadSolicitante = new JFrameCadSolicitante(null, true);
 
         jFrameCadSolicitante.idSolicitante = pID;
-
+        
         if (pID > 0) {
             jFrameCadSolicitante.carregaObjetosSolicitante();
             jFrameCadSolicitante.carregaObjetosEndereco();
             jFrameCadSolicitante.carregaObjetosDespesasFamiliares();
-            jFrameCadSolicitante.readJTable();
+            jFrameCadSolicitante.readJTable();            
         }
 
         jFrameCadSolicitante.setLocationRelativeTo(null);
